@@ -72,8 +72,8 @@ public class main extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                if (bikes != null) {
-                    mAdapter.sortList(spinner.getSelectedItem().toString());
+                if (mEntries != null) {
+                    //mAdapter.sortList(spinner.getSelectedItem().toString());
                 }
             }
 
