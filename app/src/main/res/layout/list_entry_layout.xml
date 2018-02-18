@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dip"
+        android:layout_toLeftOf="@+id/cost"
+        android:maxLines="1"
+        android:text="Name"
+        android:textColor="@android:color/black"
+        android:textSize="15dip"
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dip"
+        android:layout_toRightOf="@+id/name"
+        android:maxLines="1"
+        android:text="Date"
+        android:textColor="@android:color/black"
+        android:textSize="15dip"
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/category"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/name"
+        android:layout_toLeftOf="@+id/cost"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:text="Category"
+        android:textColor="@android:color/black"
+        android:textSize="13dip" />
+    <TextView
+        android:id="@+id/cost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="5dp"
+        android:text="$$$$"
+        android:textColor="@android:color/holo_red_light"
+        android:textSize="16dip"
+        android:layout_above="@+id/description"
+        android:layout_below="@+id/name" />
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/category"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:text="desc"
+        android:textColor="@android:color/black"
+        android:textSize="13dip" />
+
+
+
+</RelativeLayout>
