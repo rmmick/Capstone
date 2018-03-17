@@ -1,5 +1,7 @@
 package com.helper.budget.capstone;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -8,19 +10,19 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class main extends AppCompatActivity {
+public class main extends AppCompatActivity implements SelectData {
 
     String url = "";
 
-    List<Entry> mEntries = new ArrayList<>();
+    entryDatabase mEntries;
     Spinner spinner;
     private RecyclerAdapter mAdapter;
     private RecyclerView mRecyclerView;
@@ -32,9 +34,11 @@ public class main extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        mEntries = new entryDatabase();
         loadSpinner();
-        addDataTester();
         loadRecyclerView();
+        populateData();
+
     }
 
     @Override
@@ -42,6 +46,59 @@ public class main extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == Constants.DIALOG_REQUEST_CODE) {
+
+            if (resultCode == Activity.RESULT_OK) {
+
+                if (data.getExtras().containsKey(Constants.ADD)) {
+
+                    String myValue = data.getExtras().getString(Constants.ADD);
+
+                    // Use the returned value
+                }
+            }
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                // User chose the "Settings" item, show the app settings UI...
+                Intent setIntent = new Intent(this, preferenceActivity.class);
+                startActivity(setIntent);
+                return true;
+
+            case R.id.addEntry:
+                // User chose the "Add" action
+                //Open dialog to add entry details and save to list
+                addDialog cdd=new addDialog(this, mEntries, mRecyclerView);
+                cdd.show();
+                boolean show = true;
+                /*while(show == true) {
+                    if (!cdd.isShowing()) {
+                        show = false;
+                        mRecyclerView.getAdapter().notifyDataSetChanged();
+                    }
+                }*/
+
+            return true;
+
+            case R.id.edit:
+
+            case R.id.refresh:
+                mRecyclerView.getAdapter().notifyDataSetChanged();
+
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
     }
 
     protected void loadRecyclerView() {
@@ -84,49 +141,30 @@ public class main extends AppCompatActivity {
         });
     }
 
-    private void addDataTester(){
-
-        Entry e = new Entry("Wal-Mart", "Bought some stuff", 35.00, "2/11/2018");
-        mEntries.add(e);
-        e = new Entry("Target", "Bought some stuff", 105.00, "2/10/2018");
-        mEntries.add(e);
-        e = new Entry("Five Below", "Bought some stuff", 5.30, "2/07/2018");
-        mEntries.add(e);
-        e = new Entry("ScrubLand", "Bought some stuff", 10000.00, "2/20/2018");
-        mEntries.add(e);
-        e = new Entry("BryanOrBill", "Bought some stuff", 69.00, "2/14/2018");
-        mEntries.add(e);
-        e = new Entry("Wal-Mart", "Bought some stuff", 35.00, "2/11/2018");
-        mEntries.add(e);
-        e = new Entry("Target", "Bought some stuff", 105.00, "2/10/2018");
-        mEntries.add(e);
-        e = new Entry("Five Below", "Bought some stuff", 5.30, "2/07/2018");
-        mEntries.add(e);
-        e = new Entry("ScrubLand", "Bought some stuff", 10000.00, "2/20/2018");
-        mEntries.add(e);
-        e = new Entry("BryanOrBill", "Bought some stuff", 69.00, "2/14/2018");
-        mEntries.add(e);
-        e = new Entry("Wal-Mart", "Bought some stuff", 35.00, "2/11/2018");
-        mEntries.add(e);
-        e = new Entry("Target", "Bought some stuff", 105.00, "2/10/2018");
-        mEntries.add(e);
-        e = new Entry("Five Below", "Bought some stuff", 5.30, "2/07/2018");
-        mEntries.add(e);
-        e = new Entry("ScrubLand", "Bought some stuff", 10000.00, "2/20/2018");
-        mEntries.add(e);
-        e = new Entry("BryanOrBill", "Bought some stuff", 69.00, "2/14/2018");
-        mEntries.add(e);
-        e = new Entry("Wal-Mart", "Bought some stuff", 35.00, "2/11/2018");
-        mEntries.add(e);
-        e = new Entry("Target", "Bought some stuff", 105.00, "2/10/2018");
-        mEntries.add(e);
-        e = new Entry("Five Below", "Bought some stuff", 5.30, "2/07/2018");
-        mEntries.add(e);
-        e = new Entry("ScrubLand", "Bought some stuff", 10000.00, "2/20/2018");
-        mEntries.add(e);
-        e = new Entry("BryanOrBill", "Bought some stuff", 69.00, "2/14/2018");
-        mEntries.add(e);
+    @Override
+    public void onSelectedData(String string) {
 
     }
 
+    private void populateData(){
+
+        mEntries.addEntry(new Entry("Name", "Enter something descriptive into this box.", 33.15, "12/12/2016", "Household"));
+        mEntries.addEntry(new Entry("Name", "Enter something descriptive into this box.", 33.15, "12/12/2016", "Household"));
+        mEntries.addEntry(new Entry("Name", "Enter something descriptive into this box.", 33.15, "12/12/2016", "Household"));
+        mEntries.addEntry(new Entry("Name", "Enter something descriptive into this box.", 33.15, "12/12/2016", "Household"));
+        mEntries.addEntry(new Entry("Name", "Enter something descriptive into this box.", 33.15, "12/12/2016", "Household"));
+        mEntries.addEntry(new Entry("Name", "Enter something descriptive into this box.", 33.15, "12/12/2016", "Household"));
+        mEntries.addEntry(new Entry("Name", "Enter something descriptive into this box.", 33.15, "12/12/2016", "Household"));
+        mEntries.addEntry(new Entry("Name", "Enter something descriptive into this box.", 33.15, "12/12/2016", "Household"));
+        mEntries.addEntry(new Entry("Name", "Enter something descriptive into this box.", 33.15, "12/12/2016", "Household"));
+        mEntries.addEntry(new Entry("Name", "Enter something descriptive into this box.", 33.15, "12/12/2016", "Household"));
+        mEntries.addEntry(new Entry("Name", "Enter something descriptive into this box.", 33.15, "12/12/2016", "Household"));
+        mEntries.addEntry(new Entry("Name", "Enter something descriptive into this box.", 33.15, "12/12/2016", "Household"));
+        mEntries.addEntry(new Entry("Name", "Enter something descriptive into this box.", 33.15, "12/12/2016", "Household"));
+        mEntries.addEntry(new Entry("Name", "Enter something descriptive into this box.", 33.15, "12/12/2016", "Household"));
+        mEntries.addEntry(new Entry("Name", "Enter something descriptive into this box.", 33.15, "12/12/2016", "Household"));
+        mEntries.addEntry(new Entry("Name", "Enter something descriptive into this box.", 33.15, "12/12/2016", "Household"));
+        mEntries.addEntry(new Entry("Name", "Enter something descriptive into this box.", 33.15, "12/12/2016", "Household"));
+        mEntries.addEntry(new Entry("Name", "Enter something descriptive into this box.", 33.15, "12/12/2016", "Household"));
+    }
 }
