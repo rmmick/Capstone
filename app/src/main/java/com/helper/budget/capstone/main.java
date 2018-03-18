@@ -17,8 +17,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
-public class main extends AppCompatActivity implements SelectData {
+public class main extends AppCompatActivity {
 
     String url = "";
 
@@ -131,7 +132,7 @@ public class main extends AppCompatActivity implements SelectData {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 if (mEntries != null) {
-                    //mAdapter.sortList(spinner.getSelectedItem().toString());
+                    mAdapter.sortList(spinner.getSelectedItem().toString());
                 }
             }
 
@@ -141,30 +142,10 @@ public class main extends AppCompatActivity implements SelectData {
         });
     }
 
-    @Override
-    public void onSelectedData(String string) {
-
-    }
-
     private void populateData(){
 
-        mEntries.addEntry(new Entry("Name", "Enter something descriptive into this box.", 33.15, "12/12/2016", "Household"));
-        mEntries.addEntry(new Entry("Name", "Enter something descriptive into this box.", 33.15, "12/12/2016", "Household"));
-        mEntries.addEntry(new Entry("Name", "Enter something descriptive into this box.", 33.15, "12/12/2016", "Household"));
-        mEntries.addEntry(new Entry("Name", "Enter something descriptive into this box.", 33.15, "12/12/2016", "Household"));
-        mEntries.addEntry(new Entry("Name", "Enter something descriptive into this box.", 33.15, "12/12/2016", "Household"));
-        mEntries.addEntry(new Entry("Name", "Enter something descriptive into this box.", 33.15, "12/12/2016", "Household"));
-        mEntries.addEntry(new Entry("Name", "Enter something descriptive into this box.", 33.15, "12/12/2016", "Household"));
-        mEntries.addEntry(new Entry("Name", "Enter something descriptive into this box.", 33.15, "12/12/2016", "Household"));
-        mEntries.addEntry(new Entry("Name", "Enter something descriptive into this box.", 33.15, "12/12/2016", "Household"));
-        mEntries.addEntry(new Entry("Name", "Enter something descriptive into this box.", 33.15, "12/12/2016", "Household"));
-        mEntries.addEntry(new Entry("Name", "Enter something descriptive into this box.", 33.15, "12/12/2016", "Household"));
-        mEntries.addEntry(new Entry("Name", "Enter something descriptive into this box.", 33.15, "12/12/2016", "Household"));
-        mEntries.addEntry(new Entry("Name", "Enter something descriptive into this box.", 33.15, "12/12/2016", "Household"));
-        mEntries.addEntry(new Entry("Name", "Enter something descriptive into this box.", 33.15, "12/12/2016", "Household"));
-        mEntries.addEntry(new Entry("Name", "Enter something descriptive into this box.", 33.15, "12/12/2016", "Household"));
-        mEntries.addEntry(new Entry("Name", "Enter something descriptive into this box.", 33.15, "12/12/2016", "Household"));
-        mEntries.addEntry(new Entry("Name", "Enter something descriptive into this box.", 33.15, "12/12/2016", "Household"));
-        mEntries.addEntry(new Entry("Name", "Enter something descriptive into this box.", 33.15, "12/12/2016", "Household"));
+        mEntries.addEntry(new Entry("1", "Enter something descriptive into this box.", 33.15, "12/12/2016", "Household"));
+        mEntries.addEntry(new Entry("2", "Enter something descriptive into this box.", 47.91, "1/16/2016", "Vehicle"));
+        mEntries.addEntry(new Entry("3", "Enter something descriptive into this box.", 85730.56, "4/11/2016", "Household"));
     }
 }

@@ -11,12 +11,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
 import java.util.AbstractQueue;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -36,7 +42,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter. image
         private TextView mDate;
         private TextView mCategory;
         private Entry mEntry;
-        private Button deleteButton;
+        private ImageView deleteButton;
 
         public  imageHolder(View v, String URL) {
             super(v);
@@ -45,7 +51,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter. image
             mDescription = (TextView) v.findViewById(R.id.description);
             mCost = (TextView) v.findViewById(R.id.cost);
             mCategory = (TextView) v.findViewById(R.id.category);
-            deleteButton = (Button) v.findViewById(R.id.delButton);
             v.setOnClickListener(this);
         }
 
@@ -62,21 +67,21 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter. image
         @Override
         public void onClick(View v) {
 
-            if(v.equals(deleteButton)){
-                delete(getAdapterPosition());
-            } else {
-                Context context = itemView.getContext();
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setMessage(mEntry.toString())
-                        .setCancelable(false)
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                            }
-                        });
-                AlertDialog alert = builder.create();
-                alert.show();
-            }
-
+            Context context = itemView.getContext();
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setMessage(mEntry.toString())
+                    .setCancelable(false)
+                    .setNegativeButton("Delete", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            delete(getAdapterPosition());
+                        }
+                    })
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                        }
+                    });
+            AlertDialog alert = builder.create();
+            alert.show();
         }
     }
 
@@ -89,6 +94,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter. image
     public RecyclerAdapter.imageHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View inflatedView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_entry_layout, parent, false);
         return new  imageHolder(inflatedView, mURL);
+
     }
 
     @Override
@@ -110,6 +116,23 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter. image
         eDB.getEntriesList().remove(position);
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, eDB.getEntriesList().size());
+    }
+
+    void sortList(String sort) {
+        switch (sort) {
+            case "Cost":
+                Collections.sort(eDB.getEntriesList(), new CompareCost());
+                break;
+            case "Entry Name":
+                Collections.sort(eDB.getEntriesList(), new CompareName());
+                break;
+            case "Date":
+                Collections.sort(eDB.getEntriesList(), new CompareDate());
+                break;
+            default:
+                break;
+        }
+        notifyDataSetChanged();
     }
 
 }
