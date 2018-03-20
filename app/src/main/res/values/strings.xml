@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Capstone</string>
     <string name="title_activity_main">main</string>
+    <string name="title_activity_login_">Sign in</string>
+    <string name="title_activity_login">Login</string>
+
+
 </resources>

@@ -19,7 +19,7 @@ import android.widget.Spinner;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class main extends AppCompatActivity {
+public class Main_Activity extends AppCompatActivity {
 
     String url = "";
 
@@ -89,7 +89,7 @@ public class main extends AppCompatActivity {
                 return true;
 
             case R.id.budget:
-                Intent mIntent = new Intent(this, preferenceActivity.class);
+                Intent mIntent = new Intent(this, budgetGenerator.class);
                 startActivity(mIntent);
 
             default:
