@@ -54,11 +54,8 @@ public class main extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == Constants.DIALOG_REQUEST_CODE) {
-
             if (resultCode == Activity.RESULT_OK) {
-
                 if (data.getExtras().containsKey(Constants.ADD)) {
-
                     String myValue = data.getExtras().getString(Constants.ADD);
 
                     // Use the returned value
@@ -71,14 +68,11 @@ public class main extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings:
-                // User chose the "Settings" item, show the app settings UI...
                 Intent setIntent = new Intent(this, preferenceActivity.class);
                 startActivity(setIntent);
                 return true;
 
             case R.id.addEntry:
-                // User chose the "Add" action
-                //Open dialog to add entry details and save to list
                 addDialog cdd=new addDialog(this, mEntries, mRecyclerView);
                 cdd.show();
                 boolean show = true;
@@ -88,13 +82,15 @@ public class main extends AppCompatActivity {
                         mRecyclerView.getAdapter().notifyDataSetChanged();
                     }
                 }*/
-
             return true;
-
-            case R.id.edit:
 
             case R.id.refresh:
                 mRecyclerView.getAdapter().notifyDataSetChanged();
+                return true;
+
+            case R.id.budget:
+                Intent mIntent = new Intent(this, preferenceActivity.class);
+                startActivity(mIntent);
 
             default:
                 return super.onOptionsItemSelected(item);

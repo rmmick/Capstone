@@ -11,14 +11,6 @@
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/edit"
-        android:icon="@android:drawable/ic_menu_edit"
-        android:orderInCategory="1"
-        android:title="Edit"
-        android:visible="true"
-        app:showAsAction="always" />
-
-    <item
         android:id="@+id/addEntry"
         android:icon="@android:drawable/ic_menu_add"
         android:orderInCategory="1"
