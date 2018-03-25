@@ -10,6 +10,7 @@ import java.util.List;
 public class entryDatabase {
 
     String ServerURL = "";
+    String username;
 
     private List<Entry> mEntries = new ArrayList<>();
 
@@ -22,6 +23,10 @@ public class entryDatabase {
 
     public List<Entry> getEntriesList(){
         return mEntries;
+    }
+
+    public void setUsername(String u){
+        username = u;
     }
 
 }

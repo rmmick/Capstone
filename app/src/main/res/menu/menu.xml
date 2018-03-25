@@ -3,8 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/spinner2"
+        android:checkable="false"
+        android:title="spinner"
+        app:actionViewClass="android.widget.Spinner"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/budget"
-        android:icon="@android:drawable/ic_menu_day"
+        android:icon="@drawable/budget"
+        android:orderInCategory="1"
+        android:title="Budget"
+        android:visible="true"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/view"
+        android:icon="@drawable/money"
         android:orderInCategory="1"
         android:title="Budget"
         android:visible="true"
@@ -12,7 +27,7 @@
 
     <item
         android:id="@+id/addEntry"
-        android:icon="@android:drawable/ic_menu_add"
+        android:icon="@drawable/plus"
         android:orderInCategory="1"
         android:title="Add"
         android:visible="true"
@@ -20,7 +35,7 @@
 
     <item
         android:id="@+id/refresh"
-        android:icon="@android:drawable/ic_popup_sync"
+        android:icon="@drawable/refresh"
         android:orderInCategory="1"
         android:title="Add"
         android:visible="true"
@@ -28,7 +43,7 @@
 
     <item
         android:id="@+id/action_settings"
-        android:icon="@android:drawable/ic_menu_more"
+        android:icon="@drawable/dots"
         app:showAsAction="never"
         android:title="Settings"></item>
 

@@ -34,6 +34,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter. image
 
     private entryDatabase eDB;
     private String mURL = "";
+    private Main_Activity a;
 
     public class imageHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -86,9 +87,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter. image
         }
     }
 
-    RecyclerAdapter(entryDatabase newEntries, String myURL) {
+    RecyclerAdapter(entryDatabase newEntries, String myURL, Main_Activity ab) {
         eDB = newEntries;
         mURL = myURL;
+        a = ab;
     }
 
     @Override
@@ -114,7 +116,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter. image
 
     private void delete(int p){
         int position = p;
-        eDB.getEntriesList().remove(position);
+        deleteTask task = new deleteTask(a, eDB, position);
+        Entry e = eDB.getEntriesList().get(position);
+        task.execute("entry", e.username, e.Category, e.year, e.month, e.day, e.Description, e.Cost.toString(), e.Name);
+
+        //eDB.getEntriesList().remove(position);
+    }
+
+    public void notifyDeletion(int position){
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, eDB.getEntriesList().size());
     }

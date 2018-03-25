@@ -7,10 +7,9 @@ package com.helper.budget.capstone;
 public class Entry {
 
     String username;
-    String password;
-
+    String id;
     Double Cost;
-    String Date;
+    String Date; //mm/dd/yyyy
     String day, Category, month, year, Description, Name;
 
     @Override
@@ -29,5 +28,22 @@ public class Entry {
         Cost = c;
         Date = date;
         Category = cat;
+    }
+
+    public void setUsername(String u){
+
+        username = u;
+    }
+
+    public void setDate(String d, String m, String y){
+
+        Date = d + "/" + m + "/" + y;
+    }
+
+    public void setSeparateDate(String d, String m, String y){
+
+        day = d;
+        month = m;
+        year = y;
     }
 }

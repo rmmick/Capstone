@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class Main_Activity extends AppCompatActivity {
 
     entryDatabase mEntries;
     Spinner spinner;
+    private Button r;
     private RecyclerAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLinearLayoutManager;
@@ -36,10 +38,16 @@ public class Main_Activity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mEntries = new entryDatabase();
-        loadSpinner();
         loadRecyclerView();
         populateData();
         setTitle("");
+
+        r = (Button) findViewById(R.id.mainRefresh);
+        r.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                mRecyclerView.getAdapter().notifyDataSetChanged();
+            }
+        });
 
     }
 
@@ -47,6 +55,34 @@ public class Main_Activity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu, menu);
+
+        MenuItem item = menu.findItem(R.id.spinner2);
+        final Spinner spinner = (Spinner) item.getActionView();
+
+        ArrayList<String> s = new ArrayList<>();
+        s.add("Name");
+        s.add("Cost");
+        s.add("Date");
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, s);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setEnabled(true);
+
+        spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                if (mEntries != null) {
+                    mAdapter.sortList(spinner.getSelectedItem().toString());
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
         return true;
     }
 
@@ -77,7 +113,6 @@ public class Main_Activity extends AppCompatActivity {
                 //addDialog cdd=new addDialog(this, mEntries);
                 //cdd.show();
                 mAdapter.addEntry(this, mEntries);
-
             return true;
 
             case R.id.refresh:
@@ -101,43 +136,20 @@ public class Main_Activity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mAdapter = new RecyclerAdapter(mEntries, url);
+        mAdapter = new RecyclerAdapter(mEntries, url, this);
         mRecyclerView.setAdapter(mAdapter);
-    }
-
-    private void loadSpinner() {
-
-        spinner = (Spinner) findViewById(R.id.spinner);
-        spinner.setAdapter(null);
-
-        ArrayList<String> s = new ArrayList<>();
-        s.add("Entry Name");
-        s.add("Cost");
-        s.add("Date");
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, s);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setEnabled(true);
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                if (mEntries != null) {
-                    mAdapter.sortList(spinner.getSelectedItem().toString());
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
     }
 
     private void populateData(){
 
-        mEntries.addEntry(new Entry("1", "Enter something descriptive into this box.", 33.15, "12/12/2016", "Household"));
-        mEntries.addEntry(new Entry("2", "Enter something descriptive into this box.", 47.91, "1/16/2016", "Vehicle"));
-        mEntries.addEntry(new Entry("3", "Enter something descriptive into this box.", 85730.56, "4/11/2016", "Household"));
+        mEntries.addEntry(new Entry("Hello", "Enter something descriptive into this box.", 33.15, "12/12/2016", "Household"));
+        mEntries.addEntry(new Entry("world", "Enter something descriptive into this box.", 47.91, "1/16/2016", "Vehicle"));
+        mEntries.addEntry(new Entry("Fuck", "Enter something descriptive into this box.", 85730.56, "4/11/2016", "Household"));
+
+        Entry e = new Entry("Venture", "Rent", 600.98, "2/12/1202", "home");
+        e.setSeparateDate("12", "2", "2018");
+        e.setUsername("bryan");
+
+        mEntries.addEntry(e);
     }
 }
