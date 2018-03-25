@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="50dp"
+    android:paddingRight="50dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    >
+
+
+    <Button
+        android:id="@+id/addEntryButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/entryDescription"
+        android:layout_below="@+id/entryDescription"
+        android:layout_marginTop="25dp"
+        android:text="Add Entry" />
+
+    <EditText
+        android:id="@+id/entryName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="56dp"
+        android:ems="10"
+        android:hint="Name"
+        android:inputType="textPersonName" />
+
+    <Spinner
+        android:id="@+id/categorySpinner"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/entryName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp" />
+
+    <EditText
+        android:id="@+id/entryCost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/entryName"
+        android:layout_below="@+id/categorySpinner"
+        android:layout_marginTop="25dp"
+        android:ems="10"
+        android:hint="0.00"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/entryDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="75dp"
+        android:layout_alignStart="@+id/entryDate"
+        android:layout_below="@+id/entryDate"
+        android:layout_marginTop="30dp"
+        android:ems="10"
+        android:hint="Details"
+        android:inputType="textMultiLine" />
+
+    <EditText
+        android:id="@+id/entryDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/entryCost"
+        android:layout_below="@+id/entryCost"
+        android:layout_marginTop="25dp"
+        android:ems="10"
+        android:hint="mm/dd/yyyy"
+        android:inputType="date" />
+
+    <Button
+        android:id="@+id/cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/addEntryButton"
+        android:layout_alignBottom="@+id/addEntryButton"
+        android:layout_alignEnd="@+id/entryDescription"
+        android:text="Cancel" />
+
+</RelativeLayout>

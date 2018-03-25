@@ -39,6 +39,7 @@ public class Main_Activity extends AppCompatActivity {
         loadSpinner();
         loadRecyclerView();
         populateData();
+        setTitle("");
 
     }
 
@@ -73,15 +74,10 @@ public class Main_Activity extends AppCompatActivity {
                 return true;
 
             case R.id.addEntry:
-                addDialog cdd=new addDialog(this, mEntries, mRecyclerView);
-                cdd.show();
-                boolean show = true;
-                /*while(show == true) {
-                    if (!cdd.isShowing()) {
-                        show = false;
-                        mRecyclerView.getAdapter().notifyDataSetChanged();
-                    }
-                }*/
+                //addDialog cdd=new addDialog(this, mEntries);
+                //cdd.show();
+                mAdapter.addEntry(this, mEntries);
+
             return true;
 
             case R.id.refresh:
@@ -115,8 +111,8 @@ public class Main_Activity extends AppCompatActivity {
         spinner.setAdapter(null);
 
         ArrayList<String> s = new ArrayList<>();
-        s.add("Cost");
         s.add("Entry Name");
+        s.add("Cost");
         s.add("Date");
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, s);

@@ -4,6 +4,7 @@ package com.helper.budget.capstone;
  * Created by Rachel on 2/18/2018.
  */
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
@@ -116,6 +117,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter. image
         eDB.getEntriesList().remove(position);
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, eDB.getEntriesList().size());
+    }
+
+    public void addEntry(Activity a, entryDatabase EDB){
+
+        addDialog cdd=new addDialog(a, EDB);
+        cdd.show();
+        this.notifyDataSetChanged();
+
     }
 
     void sortList(String sort) {

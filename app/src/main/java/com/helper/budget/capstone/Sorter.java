@@ -1,5 +1,8 @@
 package com.helper.budget.capstone;
+import java.text.ParseException;
 import java.util.Comparator;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 /**
  * Created by Rachel on 3/18/2018.
  */
@@ -21,7 +24,16 @@ class CompareName implements Comparator<Entry> {
 
 class CompareDate implements Comparator<Entry> {
     @Override
-    public int compare(Entry t1, Entry t2) {
-        return (t1.Date.compareTo(t2.Date));
+    public int compare(Entry t1, Entry t2)
+    {
+        Date date1 = null;
+        Date date2 = null;
+        try {
+            date1 = new SimpleDateFormat("MM/dd/yyyy").parse(t1.Date);
+            date2 = new SimpleDateFormat("MM/dd/yyyy").parse(t2.Date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return (date1.compareTo(date2));
     }
 }

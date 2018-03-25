@@ -33,9 +33,10 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/deleteBudget"
             android:layout_below="@+id/textView"
-            android:layout_marginTop="37dp"
+            android:layout_marginEnd="31dp"
+            android:layout_marginTop="40dp"
+            android:layout_toStartOf="@+id/houseTotal"
             android:text="House:"
             android:textSize="15dp" />
 
@@ -141,9 +142,9 @@
             android:id="@+id/newBudget"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/editBudget"
             android:layout_below="@+id/textView7"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="35dp"
+            android:layout_marginTop="63dp"
             android:text="Generate New Budget" />
 
         <Button
@@ -155,15 +156,6 @@
             android:layout_marginTop="13dp"
             android:text="Edit Current Budget" />
 
-        <Button
-            android:id="@+id/deleteBudget"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/editBudget"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="14dp"
-            android:text="Delete Current Budget" />
-
         <TextView
             android:id="@+id/houseLimit"
             android:layout_width="wrap_content"
@@ -171,7 +163,58 @@
             android:layout_alignTop="@+id/houseTotal"
             android:layout_marginStart="32dp"
             android:layout_toEndOf="@+id/vehicleTotal"
-            android:text="TextView" />
+            android:text="TextView"
+            android:textColor="@color/Red"/>
+
+        <TextView
+            android:id="@+id/vehicleLimit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/vehicleTotal"
+            android:layout_marginStart="32dp"
+            android:layout_toEndOf="@+id/vehicleTotal"
+            android:text="TextView"
+            android:textColor="@color/Red"/>
+
+        <TextView
+            android:id="@+id/foodLimit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/foodTotal"
+            android:layout_marginStart="32dp"
+            android:layout_toEndOf="@+id/foodTotal"
+            android:text="TextView"
+            android:textColor="@color/Red"/>
+
+        <TextView
+            android:id="@+id/petsLimit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/petsTotal"
+            android:layout_marginStart="32dp"
+            android:layout_toEndOf="@+id/petsTotal"
+            android:text="TextView"
+            android:textColor="@color/Red"/>
+
+        <TextView
+            android:id="@+id/entertaimentLimit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/entertainmentTotal"
+            android:layout_marginStart="32dp"
+            android:layout_toEndOf="@+id/entertainmentTotal"
+            android:text="TextView"
+            android:textColor="@color/Red"/>
+
+        <TextView
+            android:id="@+id/otherLimit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/otherTotal"
+            android:layout_marginStart="32dp"
+            android:layout_toEndOf="@+id/otherTotal"
+            android:text="TextView"
+            android:textColor="@color/Red"/>
 
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

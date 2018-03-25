@@ -1,5 +1,6 @@
 package com.helper.budget.capstone;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,8 +13,8 @@ import android.widget.Button;
 public class budgetGenerator extends AppCompatActivity {
 
     Button newBud;
-    Button delBud;
     Button editBud;
+    entryDatabase EDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +22,6 @@ public class budgetGenerator extends AppCompatActivity {
         setContentView(R.layout.activity_budget_generator);
 
         newBud = (Button) findViewById(R.id.newBudget);
-        delBud = (Button) findViewById(R.id.deleteBudget);
         editBud = (Button) findViewById(R.id.editBudget);
 
         newBud.setOnClickListener(new View.OnClickListener() {
@@ -37,23 +37,8 @@ public class budgetGenerator extends AppCompatActivity {
                         })
                         .setPositiveButton("Manual", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                //TODO Have the user manually enter in values
-                            }
-                        });
-                AlertDialog alert = builder.create();
-                alert.show();
-            }
-        });
+                               // budgetDialog bd = new budgetDialog(this, );
 
-        delBud.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Context context = v.getContext();
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setMessage("Delete the Current Budget Permanently?")
-                        .setCancelable(true)
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                //TODO Delete current budget limits here
                             }
                         });
                 AlertDialog alert = builder.create();
@@ -69,3 +54,5 @@ public class budgetGenerator extends AppCompatActivity {
 
     }
 }
+
+//<div>Icon made from <a href="http://www.onlinewebfonts.com/icon">Icon Fonts</a> is licensed by CC BY 3.0</div>

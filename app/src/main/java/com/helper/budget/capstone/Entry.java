@@ -6,16 +6,17 @@ package com.helper.budget.capstone;
 
 public class Entry {
 
-    String Name;
-    String Description;
+    String username;
+    String password;
+
     Double Cost;
     String Date;
-    String Category;
+    String day, Category, month, year, Description, Name;
 
     @Override
     public String toString() {
         String info = "Name: " + Name + "\n"
-                + "Date: " + Date + "\n"
+                + "Date: " + day + "\n"
                 + "Category: " + Category + "\n"
                 + "Cost: " + Cost + "\n"
                 + "Description: " + Description;
