@@ -1,8 +1,10 @@
 package com.helper.budget.capstone;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -12,10 +14,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
+
+import com.helper.budget.capstone.AsyncTasks.entrySelectTask;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,8 +44,11 @@ public class Main_Activity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mEntries = new entryDatabase();
-        loadRecyclerView();
+        Intent intent = getIntent();
+        mEntries.username = intent.getStringExtra("username");
+        //Toast.makeText(this, user, Toast.LENGTH_SHORT).show();
         populateData();
+        loadRecyclerView();
         setTitle("");
 
         r = (Button) findViewById(R.id.mainRefresh);
@@ -119,9 +128,37 @@ public class Main_Activity extends AppCompatActivity {
                 mRecyclerView.getAdapter().notifyDataSetChanged();
                 return true;
 
-            case R.id.budget:
-                Intent mIntent = new Intent(this, budgetGenerator.class);
-                startActivity(mIntent);
+            case R.id.createBudget:
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage("How would you like to generate a new budget?")
+                        .setCancelable(true)
+                        .setNegativeButton("System", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                //TODO Have the System generate a new budget
+                            }
+                        })
+                        .setPositiveButton("Manual", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                //TODO Allow User to enter in their own values
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
+                return true;
+
+            case R.id.viewBudget:
+
+                budgetDialog bd = new budgetDialog(this, mEntries);
+
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                lp.copyFrom(bd.getWindow().getAttributes());
+                lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                bd.show();
+                bd.getWindow().setAttributes(lp);
+                bd.show();
+                return true;
 
             default:
                 return super.onOptionsItemSelected(item);
@@ -129,7 +166,7 @@ public class Main_Activity extends AppCompatActivity {
         }
     }
 
-    protected void loadRecyclerView() {
+    public void loadRecyclerView() {
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mLinearLayoutManager = new LinearLayoutManager(this);
@@ -141,15 +178,7 @@ public class Main_Activity extends AppCompatActivity {
     }
 
     private void populateData(){
-
-        mEntries.addEntry(new Entry("Hello", "Enter something descriptive into this box.", 33.15, "12/12/2016", "Household"));
-        mEntries.addEntry(new Entry("world", "Enter something descriptive into this box.", 47.91, "1/16/2016", "Vehicle"));
-        mEntries.addEntry(new Entry("Fuck", "Enter something descriptive into this box.", 85730.56, "4/11/2016", "Household"));
-
-        Entry e = new Entry("Venture", "Rent", 600.98, "2/12/1202", "home");
-        e.setSeparateDate("12", "2", "2018");
-        e.setUsername("bryan");
-
-        mEntries.addEntry(e);
+        entrySelectTask task = new entrySelectTask(this,mEntries);
+        task.execute(mEntries.username);
     }
 }

@@ -10,16 +10,16 @@
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/budget"
-        android:icon="@drawable/budget"
+        android:id="@+id/createBudget"
+        android:icon="@drawable/calc"
         android:orderInCategory="1"
         android:title="Budget"
         android:visible="true"
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/view"
-        android:icon="@drawable/money"
+        android:id="@+id/viewBudget"
+        android:icon="@drawable/budget"
         android:orderInCategory="1"
         android:title="Budget"
         android:visible="true"
