@@ -66,9 +66,10 @@ public class addDialog extends Dialog implements
     }
 
     @Override
-    public void setOnDismissListener(@Nullable OnDismissListener listener) {
-        super.setOnDismissListener(listener);
-
+    public void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        Button r = c.findViewById(R.id.mainRefresh);
+        r.performClick();
     }
 
     @Override

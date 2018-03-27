@@ -53,8 +53,8 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="55dp"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="bryan" />
+                android:hint="Username"
+                android:inputType="textPersonName" />
 
             <EditText
                 android:id="@+id/editText4"
@@ -64,8 +64,8 @@
                 android:layout_below="@+id/editText3"
                 android:layout_marginTop="21dp"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="password" />
+                android:hint="Password"
+                android:inputType="textPassword" />
 
             <Button
                 android:id="@+id/loginButton"
