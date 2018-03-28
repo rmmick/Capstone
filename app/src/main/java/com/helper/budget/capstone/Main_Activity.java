@@ -46,7 +46,6 @@ public class Main_Activity extends AppCompatActivity {
         mEntries = new entryDatabase();
         Intent intent = getIntent();
         mEntries.username = intent.getStringExtra("username");
-        //Toast.makeText(this, user, Toast.LENGTH_SHORT).show();
         populateData();
         loadRecyclerView();
         setTitle("");
@@ -119,10 +118,8 @@ public class Main_Activity extends AppCompatActivity {
                 return true;
 
             case R.id.addEntry:
-                //addDialog cdd=new addDialog(this, mEntries);
-                //cdd.show();
-                mAdapter.addEntry(this, mEntries);
-            return true;
+                mAdapter.addEntry();
+                return true;
 
             case R.id.refresh:
                 mRecyclerView.getAdapter().notifyDataSetChanged();
@@ -159,7 +156,10 @@ public class Main_Activity extends AppCompatActivity {
                 bd.getWindow().setAttributes(lp);
                 bd.show();
                 return true;
-
+            case R.id.action_logout:
+                Intent intent = new Intent(this, Login.class);
+                startActivity(intent);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
 

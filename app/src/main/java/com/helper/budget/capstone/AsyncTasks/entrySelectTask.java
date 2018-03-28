@@ -75,21 +75,22 @@ public class entrySelectTask extends AsyncTask<String,Void,String>{
                 String description = jO.getString("description");
                 String cost = jO.getString("cost");
                 Double amount = Double.parseDouble(cost);
-                date = date.replace('-','/');
-                e = new Entry(placeSpent,description,amount, date, category);
-                eDB.addEntry(e);
+                String[] dates = date.split("-");
+                if(dates.length == 3){
+                    e = new Entry(placeSpent,description,amount, dates[1]+"/"+dates[2]+"/"+dates[0], category);
+                    e.useDate();
+                    eDB.addEntry(e);
+                }
             }
             main.loadRecyclerView();
             progressDialog_stop();
             return;
         }catch(Exception e){
             Toast.makeText(main, "error parsing data", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
         }
         Log.d("MAIN TASK", response);
         fromWeb = response;
-        //TextView tv = main.findViewById(R.id.textViewSelectData);
-        //tv.setText(fromWeb);
-
         Log.d("MAIN TASK", fromWeb);
         progressDialog_stop();
     }
@@ -104,10 +105,6 @@ public class entrySelectTask extends AsyncTask<String,Void,String>{
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        /*if (main != null) {
-            Toast.makeText(main, s, Toast.LENGTH_SHORT).show();
-        }
-        detach();*/
     }
 
     @Override

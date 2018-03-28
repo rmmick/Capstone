@@ -15,7 +15,7 @@ public class Entry {
     @Override
     public String toString() {
         String info = "Name: " + Name + "\n"
-                + "Date: " + day + "\n"
+                + "Date: " + Date + "\n"
                 + "Category: " + Category + "\n"
                 + "Cost: " + Cost + "\n"
                 + "Description: " + Description;
@@ -37,7 +37,7 @@ public class Entry {
 
     public void setDate(String d, String m, String y){
 
-        Date = d + "/" + m + "/" + y;
+        Date = m + "/" + d + "/" + y;
     }
 
     public void setSeparateDate(String d, String m, String y){
@@ -45,5 +45,11 @@ public class Entry {
         day = d;
         month = m;
         year = y;
+    }
+    public void useDate(){
+        String[] dates = Date.split("/");
+        day = dates[1];
+        month = dates[0];
+        year = dates[2];
     }
 }

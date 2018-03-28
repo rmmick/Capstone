@@ -1,20 +1,17 @@
 package com.helper.budget.capstone;
 
-import android.app.Activity;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.support.v7.widget.RecyclerView;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.helper.budget.capstone.AsyncTasks.entryInsertTask;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -26,7 +23,7 @@ import java.util.ArrayList;
 public class addDialog extends Dialog implements
         android.view.View.OnClickListener {
 
-    public Activity c;
+    public Main_Activity c;
     public Dialog d;
     private Button confirmAdd, cancel;
     private EditText name, cost, description, date;
@@ -34,7 +31,7 @@ public class addDialog extends Dialog implements
     private Spinner spinner;
     private String catChoice;
 
-    public addDialog(Activity a, entryDatabase EDB) {
+    public addDialog(Main_Activity a, entryDatabase EDB) {
         super(a);
         this.c = a;
         this.EDB = EDB;
@@ -81,13 +78,25 @@ public class addDialog extends Dialog implements
                 Double d = Double.parseDouble(cost.getText().toString());
                 String aD = decim.format(d);
                 Double cost2 = Double.parseDouble(aD);
-
-                Entry e = new Entry(name.getText().toString(),
+                String dateStr = date.getText().toString();
+                String[] dates = dateStr.split("/");
+                if(dates.length != 3){
+                    Toast.makeText(this.getContext(), "Invalid Date Format", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                if(dates[0].length() > 2 || dates[1].length() > 2 || dates[2].length() > 4){
+                    Toast.makeText(this.getContext(), "Invalid Date Format, Fields too long", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                entryInsertTask task = new entryInsertTask(c, EDB);
+                task.execute(EDB.username,catChoice,dates[2], dates[0],dates[1],
+                        description.getText().toString(), cost2.toString(), name.getText().toString());
+                /*Entry e = new Entry(name.getText().toString(),
                         description.getText().toString(),
                         cost2,
                         date.getText().toString(),
                         catChoice);
-                EDB.addEntry(e);
+                EDB.addEntry(e);*/
                 dismiss();
 
                 break;

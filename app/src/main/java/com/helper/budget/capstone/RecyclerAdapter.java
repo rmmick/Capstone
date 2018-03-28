@@ -20,6 +20,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.helper.budget.capstone.AsyncTasks.entryDeleteTask;
+
 import org.w3c.dom.Text;
 
 import java.util.AbstractQueue;
@@ -116,9 +118,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter. image
 
     private void delete(int p){
         int position = p;
-        deleteTask task = new deleteTask(a, eDB, position);
+        entryDeleteTask task = new entryDeleteTask(a, eDB, position);
         Entry e = eDB.getEntriesList().get(position);
-        task.execute("entry", e.username, e.Category, e.year, e.month, e.day, e.Description, e.Cost.toString(), e.Name);
+        task.execute(eDB.username, e.Category, e.year, e.month, e.day, e.Description, e.Cost.toString(), e.Name);
 
         //eDB.getEntriesList().remove(position);
     }
@@ -128,9 +130,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter. image
         notifyItemRangeChanged(position, eDB.getEntriesList().size());
     }
 
-    public void addEntry(Activity a, entryDatabase EDB){
+    public void addEntry(){
 
-        addDialog cdd=new addDialog(a, EDB);
+        addDialog cdd=new addDialog(a, eDB);
         cdd.show();
         this.notifyDataSetChanged();
 

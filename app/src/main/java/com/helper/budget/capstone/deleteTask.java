@@ -145,10 +145,12 @@ public class deleteTask extends AsyncTask<String, Void, String> {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             // error
+                            error.printStackTrace();
                             storeResponse(error.toString()+" From Entry");
                             Log.d("Error.Response", error.toString());
                         }
                     }
+
             ) {
                 @Override
                 protected Map<String, String> getParams() {
