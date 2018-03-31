@@ -37,9 +37,9 @@ public class entryDatabase {
 
     public void calcSysBudget(){
 
-        totals = new double [6];
-        counts = new double [6];
-        averages = new double [6];
+        totals = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+        counts = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+        averages = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 
         for(int i = 0; i < mEntries.size(); i++){
 
@@ -72,7 +72,8 @@ public class entryDatabase {
         }
 
         for(int j = 0; j < 6; j++){
-            averages[j] = totals[j] / counts[j];
+            if(counts[j] != 0)
+                averages[j] = totals[j] / counts[j];
         }
     }
 

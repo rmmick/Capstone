@@ -1,6 +1,7 @@
 package com.helper.budget.capstone;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,12 +20,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.helper.budget.capstone.AsyncTasks.entrySelectTask;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class Main_Activity extends AppCompatActivity {
 
@@ -36,6 +35,8 @@ public class Main_Activity extends AppCompatActivity {
     private RecyclerAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLinearLayoutManager;
+    final private int SYSTEM = 0;
+    final private int MANUAL = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,17 +128,17 @@ public class Main_Activity extends AppCompatActivity {
 
             case R.id.createBudget:
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                final AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setMessage("How would you like to generate a new budget?")
                         .setCancelable(true)
                         .setNegativeButton("System", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                //TODO Have the System generate a new budget
+                                createDialog(SYSTEM);
                             }
                         })
                         .setPositiveButton("Manual", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                //TODO Allow User to enter in their own values
+                                createDialog(MANUAL);
                             }
                         });
                 AlertDialog alert = builder.create();
@@ -146,7 +147,7 @@ public class Main_Activity extends AppCompatActivity {
 
             case R.id.viewBudget:
 
-                budgetDialog bd = new budgetDialog(this, mEntries);
+                viewBudgetDialog bd = new viewBudgetDialog(this, mEntries);
 
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                 lp.copyFrom(bd.getWindow().getAttributes());
@@ -164,6 +165,18 @@ public class Main_Activity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
 
         }
+    }
+
+    private void createDialog(int type){
+
+            createBudgetDialog bd = new createBudgetDialog(this, mEntries, type);
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(bd.getWindow().getAttributes());
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+            bd.getWindow().setAttributes(lp);
+            bd.show();
+
     }
 
     public void loadRecyclerView() {

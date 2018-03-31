@@ -24,6 +24,7 @@ import com.helper.budget.capstone.AsyncTasks.entryDeleteTask;
 
 import org.w3c.dom.Text;
 
+import java.text.DecimalFormat;
 import java.util.AbstractQueue;
 import java.util.Collections;
 import java.util.List;
@@ -60,12 +61,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter. image
 
         public void bindData(Entry uEntry) {
 
+            DecimalFormat df = new DecimalFormat("#.00");
+
             mEntry = uEntry;
             mName.setText(uEntry.Name);
             mDate.setText(uEntry.Date);
             mDescription.setText(uEntry.Description);
             mCategory.setText(uEntry.Category);
-            mCost.setText(uEntry.Cost.toString());
+            mCost.setText(df.format(uEntry.Cost));
         }
 
         @Override

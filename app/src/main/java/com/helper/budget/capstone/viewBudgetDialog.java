@@ -14,10 +14,10 @@ import java.text.DecimalFormat;
  * Created by Rachel on 3/19/2018.
  */
 
-public class budgetDialog extends Dialog implements
+public class viewBudgetDialog extends Dialog implements
         android.view.View.OnClickListener {
 
-    public budgetDialog(Activity a, entryDatabase EDB){
+    public viewBudgetDialog(Activity a, entryDatabase EDB){
         super(a);
 
     }

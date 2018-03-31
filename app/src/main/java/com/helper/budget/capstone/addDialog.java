@@ -46,7 +46,7 @@ public class addDialog extends Dialog implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.dialog_add);
+        setContentView(R.layout.add_entry_dialog);
         confirmAdd = (Button) findViewById(R.id.addEntryButton);
         cancel = (Button) findViewById(R.id.cancel);
         confirmAdd.setOnClickListener(this);
