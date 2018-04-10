@@ -2,6 +2,8 @@ package com.helper.budget.capstone;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.provider.CalendarContract;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -15,6 +17,8 @@ import com.helper.budget.capstone.AsyncTasks.entryInsertTask;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 /**
  * Created by Rachel on 2/22/2018.
@@ -57,6 +61,9 @@ public class addDialog extends Dialog implements
         description = (EditText) findViewById(R.id.entryDescription);
         date = (EditText) findViewById(R.id.entryDate);
 
+        Calendar c = Calendar.getInstance();
+        String today = (c.get(Calendar.MONTH)+1)+"/"+c.get(Calendar.DAY_OF_MONTH) + "/" + c.get(Calendar.YEAR);
+        date.setText(today);
         catChoice = "Other";
         setupSpinner();
 
@@ -74,12 +81,23 @@ public class addDialog extends Dialog implements
         switch (v.getId()) {
             case R.id.addEntryButton:
 
-                DecimalFormat decim = new DecimalFormat(".##");
-                Double d = Double.parseDouble(cost.getText().toString());
-                String aD = decim.format(d);
-                Double cost2 = Double.parseDouble(aD);
-                String dateStr = date.getText().toString();
-                String[] dates = dateStr.split("/");
+                Double d = 0.0;
+                Double cost2 = 0.0;
+                String dateStr = "";
+                String[] dates = new String[1];
+
+                if(date.getText().toString().equals("") || cost.getText().toString().equals("")||name.getText().toString().equals("")||description.getText().toString().equals("")){
+                    Toast.makeText(this.getContext(), "Cannot leave any fields blank", Toast.LENGTH_SHORT).show();
+                    break;
+                } else {
+                    DecimalFormat decim = new DecimalFormat(".##");
+                    d = Double.parseDouble(cost.getText().toString());
+                    String aD = decim.format(d);
+                    cost2 = Double.parseDouble(aD);
+                    dateStr = date.getText().toString();
+                    dates = dateStr.split("/");
+                }
+
                 if(dates.length != 3){
                     Toast.makeText(this.getContext(), "Invalid Date Format", Toast.LENGTH_SHORT).show();
                     break;
@@ -88,15 +106,49 @@ public class addDialog extends Dialog implements
                     Toast.makeText(this.getContext(), "Invalid Date Format, Fields too long", Toast.LENGTH_SHORT).show();
                     break;
                 }
+                if(Integer.parseInt(dates[0]) > 12  || Integer.parseInt(dates[0]) < 0){
+                    Toast.makeText(this.getContext(), "Invalid Date Format, Invalid Month", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                if(Integer.parseInt(dates[1])<0){
+                    Toast.makeText(this.getContext(), "Invalid Date Format, Invalid Day", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                if(Integer.parseInt(dates[0]) == 2){
+                    GregorianCalendar gc = new GregorianCalendar();
+                    if(gc.isLeapYear(Integer.parseInt(dates[2]))){
+                        if(Integer.parseInt(dates[1])>29){
+                            Toast.makeText(this.getContext(), "Invalid Date Format,Invalid Day", Toast.LENGTH_SHORT).show();
+                            break;
+                        }
+                    }else{
+                        if(Integer.parseInt(dates[1])>28){
+                            Toast.makeText(this.getContext(), "Invalid Date Format,Invalid Day", Toast.LENGTH_SHORT).show();
+                            break;
+                        }
+                    }
+
+                }
+                else if((Integer.parseInt(dates[0]) == 4)
+                        ||(Integer.parseInt(dates[0]) == 6)
+                        ||(Integer.parseInt(dates[0]) == 8)
+                        ||(Integer.parseInt(dates[0]) == 11)){
+                    if(Integer.parseInt(dates[1])>30){
+                        Toast.makeText(this.getContext(), "Invalid Date Format,Invalid Day", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                }else{
+                    if(Integer.parseInt(dates[1])>31){
+                        Toast.makeText(this.getContext(), "Invalid Date Format,Invalid Day", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                }
+                //check the username and desciption for ','',*, etc
+                String descript = description.getText().toString().replaceAll("'", "\\\\'");
+                String place = name.getText().toString().replaceAll("'", "\\\\'");
                 entryInsertTask task = new entryInsertTask(c, EDB);
                 task.execute(EDB.username,catChoice,dates[2], dates[0],dates[1],
-                        description.getText().toString(), cost2.toString(), name.getText().toString());
-                /*Entry e = new Entry(name.getText().toString(),
-                        description.getText().toString(),
-                        cost2,
-                        date.getText().toString(),
-                        catChoice);
-                EDB.addEntry(e);*/
+                      descript, cost2.toString(), place );
                 dismiss();
 
                 break;

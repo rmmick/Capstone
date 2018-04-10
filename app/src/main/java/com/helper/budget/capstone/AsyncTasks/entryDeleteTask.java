@@ -138,9 +138,11 @@ public class entryDeleteTask extends AsyncTask<String, Void, String> {
                             // response
                             storeResponse(response+" From Entry");
                             Log.d("Response", response);
-                            EDB.getEntriesList().remove(pos);
-                            Button r = main.findViewById(R.id.mainRefresh);
-                            r.performClick();
+                            if(response.equals("Data Deleted Successfully")){
+                                EDB.getEntriesList().remove(pos);
+                                Button r = main.findViewById(R.id.mainRefresh);
+                                r.performClick();
+                            }
                         }
                     },
                     new Response.ErrorListener() {

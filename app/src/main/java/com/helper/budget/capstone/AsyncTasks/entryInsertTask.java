@@ -19,6 +19,7 @@ import com.helper.budget.capstone.Main_Activity;
 import com.helper.budget.capstone.R;
 import com.helper.budget.capstone.entryDatabase;
 
+import java.time.Month;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -70,11 +71,19 @@ public class entryInsertTask extends AsyncTask<String, Void, String> {
 
     private void storeResponse(String response){
         if(response.equals("Data Inserted Successfully")){
+            DescriptionHolder = DescriptionHolder.replaceAll("\\\\'", "'");
+            PlaceHolder = PlaceHolder.replaceAll("\\\\'", "'");
             Entry e = new Entry(PlaceHolder,
                     DescriptionHolder,
                     Double.parseDouble(AmountHolder),
                     "",
                     CatHolder);
+            if(Integer.parseInt(DayHolder) < 10){
+                DayHolder = "0" + DayHolder.charAt(DayHolder.length()-1);
+            }
+            if(Integer.parseInt(MonthHolder) < 10){
+                MonthHolder = "0" + MonthHolder.charAt(MonthHolder.length()-1);
+            }
             e.setDate(DayHolder,MonthHolder,YearHolder);
             e.useDate();
             mEntries.addEntry(e);

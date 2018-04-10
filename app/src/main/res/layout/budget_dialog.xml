@@ -87,7 +87,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/textView2"
             android:layout_centerHorizontal="true"
-            android:text="TextView"
+            android:text="No Amount Set"
             android:textSize="18dp" />
 
         <TextView
@@ -96,7 +96,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/textView3"
             android:layout_alignStart="@+id/houseTotal"
-            android:text="TextView"
+            android:text="No Amount Set"
             android:textSize="18dp"/>
 
         <TextView
@@ -105,7 +105,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/textView4"
             android:layout_alignEnd="@+id/vehicleTotal"
-            android:text="TextView"
+            android:text="No Amount Set"
             android:textSize="18dp"/>
 
         <TextView
@@ -114,7 +114,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/textView5"
             android:layout_alignStart="@+id/foodTotal"
-            android:text="TextView"
+            android:text="No Amount Set"
             android:textSize="18dp" />
 
         <TextView
@@ -123,7 +123,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/textView6"
             android:layout_alignEnd="@+id/petsTotal"
-            android:text="TextView"
+            android:text="No Amount Set"
             android:textSize="18dp" />
 
         <TextView
@@ -132,7 +132,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/textView7"
             android:layout_alignEnd="@+id/entertainmentTotal"
-            android:text="TextView"
+            android:text="No Amount Set"
             android:paddingBottom="10dp"
             android:textSize="18dp"/>
 
@@ -143,7 +143,7 @@
             android:layout_alignTop="@+id/houseTotal"
             android:layout_marginStart="32dp"
             android:layout_toEndOf="@+id/vehicleTotal"
-            android:text="TextView"
+            android:text="No Limit Set"
             android:textSize="18dp"
             android:textColor="@color/Red"/>
 
@@ -154,7 +154,7 @@
             android:layout_alignTop="@+id/vehicleTotal"
             android:layout_marginStart="32dp"
             android:layout_toEndOf="@+id/vehicleTotal"
-            android:text="TextView"
+            android:text="No Limit Set"
             android:textSize="18dp"
             android:textColor="@color/Red"/>
 
@@ -165,7 +165,7 @@
             android:layout_alignTop="@+id/foodTotal"
             android:layout_marginStart="32dp"
             android:layout_toEndOf="@+id/foodTotal"
-            android:text="TextView"
+            android:text="No Limit Set"
             android:textSize="18dp"
             android:textColor="@color/Red"/>
 
@@ -176,18 +176,18 @@
             android:layout_alignTop="@+id/petsTotal"
             android:layout_marginStart="32dp"
             android:layout_toEndOf="@+id/petsTotal"
-            android:text="TextView"
+            android:text="No Limit Set"
             android:textSize="18dp"
             android:textColor="@color/Red"/>
 
         <TextView
-            android:id="@+id/entertaimentLimit"
+            android:id="@+id/entertainmentLimit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/entertainmentTotal"
             android:layout_marginStart="32dp"
             android:layout_toEndOf="@+id/entertainmentTotal"
-            android:text="TextView"
+            android:text="No Limit Set"
             android:textSize="18dp"
             android:textColor="@color/Red"/>
 
@@ -199,7 +199,7 @@
             android:layout_marginStart="32dp"
             android:layout_toEndOf="@+id/otherTotal"
             android:paddingBottom="10dp"
-            android:text="TextView"
+            android:text="No Limit Set"
             android:textSize="18dp"
             android:textColor="@color/Red"/>
 
@@ -221,7 +221,7 @@
             android:layout_alignBaseline="@+id/label1"
             android:layout_alignBottom="@+id/label1"
             android:layout_alignStart="@+id/houseTotal"
-            android:text="Total Spent"
+            android:text="Spent\n(Month)"
             android:textSize="18dp"
             android:textStyle="bold"/>
 
@@ -232,7 +232,7 @@
             android:layout_alignBaseline="@+id/label2"
             android:layout_alignBottom="@+id/label2"
             android:layout_alignStart="@+id/houseLimit"
-            android:text="Budget Limit"
+            android:text="Budget\nLimit"
             android:textColor="@color/Red"
             android:textSize="18dp"
             android:textStyle="bold" />

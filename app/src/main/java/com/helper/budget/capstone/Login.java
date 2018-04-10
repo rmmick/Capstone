@@ -40,7 +40,8 @@ public class Login extends AppCompatActivity {
             public void onClick(View v) {
                 resetSelectTask();
                 if(task != null && tvUser != null && tvPassword != null) {
-                    task.execute(tvUser.getText().toString(), tvPassword.getText().toString());
+                    task.execute(tvUser.getText().toString().replaceAll("'", "\\\\'")
+                            , tvPassword.getText().toString());
                 }else{
                     Toast.makeText(v.getContext(), "null error", Toast.LENGTH_SHORT).show();
                 }
@@ -81,7 +82,8 @@ public class Login extends AppCompatActivity {
                         .setPositiveButton("Submit", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 if(task1 != null && newUsername != null && newPassword != null) {
-                                    task1.execute(newUsername.getText().toString(), newPassword.getText().toString());
+                                    task1.execute(newUsername.getText().toString().replaceAll("'", "\\\\'")
+                                            , newPassword.getText().toString().replaceAll("'", "\\\\'"));
                                 }else{
                                     Toast.makeText(v.getContext(), "null error", Toast.LENGTH_SHORT).show();
                                 }

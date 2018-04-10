@@ -17,10 +17,13 @@ public class entryDatabase {
     private double [] totals;
     private double [] counts;
     private double [] averages;
+    private double [] budgets;
 
     private List<Entry> mEntries = new ArrayList<>();
 
-    public entryDatabase(){}
+    public entryDatabase(){
+        budgets = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+    }
 
     public void addEntry(Entry e){
 
@@ -40,6 +43,7 @@ public class entryDatabase {
         totals = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
         counts = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
         averages = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+
 
         for(int i = 0; i < mEntries.size(); i++){
 
@@ -85,4 +89,79 @@ public class entryDatabase {
         return totals;
     }
 
+    public double[] getTotalsForMonth(int month, int year){
+        double [] monthTotals = new double[]{0.0,0.0,0.0,0.0,0.0,0.0};
+        String m;
+        if(month<10){
+            m = "0" + Integer.toString(month);
+        }else{
+            m = Integer.toString(month);
+        }
+        String y = Integer.toString(year);
+        for(int i = 0; i < mEntries.size(); i++) {
+            switch (mEntries.get(i).Category) {
+                case("Home"):
+                    if (mEntries.get(i).month.equals(m) && mEntries.get(i).year.equals(y)) {
+                        monthTotals[2]+= mEntries.get(i).Cost;
+                    }
+                case "Vehicle":
+                    if (mEntries.get(i).month.equals(m) && mEntries.get(i).year.equals(y)) {
+                        monthTotals[0]+= mEntries.get(i).Cost;
+                    }
+                    break;
+                case "Pets":
+                    if (mEntries.get(i).month.equals(m) && mEntries.get(i).year.equals(y)) {
+                        monthTotals[1]+= mEntries.get(i).Cost;
+                    }
+                    break;
+                case "Food":
+                    if (mEntries.get(i).month.equals(m) && mEntries.get(i).year.equals(y)) {
+                        monthTotals[3]+= mEntries.get(i).Cost;
+                    }
+                    break;
+                case "Entertainment":
+                    if (mEntries.get(i).month.equals(m) && mEntries.get(i).year.equals(y)) {
+                        monthTotals[4]+= mEntries.get(i).Cost;
+                    }
+                    break;
+                case "Other":
+                    if (mEntries.get(i).month.equals(m) && mEntries.get(i).year.equals(y)) {
+                        monthTotals[5]+= mEntries.get(i).Cost;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+        return monthTotals;
+    }
+
+    public void setBudgets(String cat, double budget){
+        switch (cat){
+            case "Vehicle":
+                budgets[0] = budget;
+                break;
+            case "Pets":
+                budgets[1] = budget;
+                break;
+            case "Home":
+                budgets[2] = budget;
+                break;
+            case "Food":
+                budgets[3] = budget;
+                break;
+            case "Entertainment":
+                budgets[4] = budget;
+                break;
+            case "Other":
+                budgets[5] = budget;
+                break;
+            default:
+                break;
+        }
+    }
+
+    public double[] getBudgets(){
+        return budgets;
+    }
 }

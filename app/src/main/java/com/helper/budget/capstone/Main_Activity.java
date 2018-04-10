@@ -21,6 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
+import com.helper.budget.capstone.AsyncTasks.budgetSelectTask;
 import com.helper.budget.capstone.AsyncTasks.entrySelectTask;
 
 import java.util.ArrayList;
@@ -193,5 +194,7 @@ public class Main_Activity extends AppCompatActivity {
     private void populateData(){
         entrySelectTask task = new entrySelectTask(this,mEntries);
         task.execute(mEntries.username);
+        budgetSelectTask task1  = new budgetSelectTask(this,mEntries);
+        task1.execute(mEntries.username);
     }
 }
