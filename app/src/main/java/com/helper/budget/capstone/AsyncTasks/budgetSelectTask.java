@@ -2,9 +2,7 @@ package com.helper.budget.capstone.AsyncTasks;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -13,11 +11,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.helper.budget.capstone.Entry;
 import com.helper.budget.capstone.Main_Activity;
-import com.helper.budget.capstone.R;
 import com.helper.budget.capstone.entryDatabase;
-import com.helper.budget.capstone.viewBudgetDialog;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

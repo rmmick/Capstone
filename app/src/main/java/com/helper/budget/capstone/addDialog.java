@@ -14,6 +14,9 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.helper.budget.capstone.AsyncTasks.entryInsertTask;
+import com.helper.budget.capstone.Main_Activity;
+import com.helper.budget.capstone.R;
+import com.helper.budget.capstone.entryDatabase;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -147,7 +150,7 @@ public class addDialog extends Dialog implements
                 String descript = description.getText().toString().replaceAll("'", "\\\\'");
                 String place = name.getText().toString().replaceAll("'", "\\\\'");
                 entryInsertTask task = new entryInsertTask(c, EDB);
-                task.execute(EDB.username,catChoice,dates[2], dates[0],dates[1],
+                task.execute(EDB.getUsername(),catChoice,dates[2], dates[0],dates[1],
                       descript, cost2.toString(), place );
                 dismiss();
 

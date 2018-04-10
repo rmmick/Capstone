@@ -9,6 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.helper.budget.capstone.R;
+import com.helper.budget.capstone.entryDatabase;
+
 import org.w3c.dom.Text;
 
 import java.text.DecimalFormat;

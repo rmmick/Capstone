@@ -11,7 +11,6 @@ import java.util.List;
 
 public class entryDatabase {
 
-    String ServerURL = "";
     String username;
 
     private double [] totals;
@@ -164,4 +163,6 @@ public class entryDatabase {
     public double[] getBudgets(){
         return budgets;
     }
+
+    public String getUsername(){return username;}
 }

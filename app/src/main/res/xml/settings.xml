@@ -3,11 +3,45 @@
 
     <PreferenceCategory>
         android:title="PreferenceCategory ListPreference">
+
         <ListPreference
-            android:key="PREF_LIST"
-            android:title="Details"
-            android:summary="Example Preference"
-            android:defaultValue="None" />
+            android:key="Z"
+            android:title="Welcome"
+            android:summary="Budget Helper is a financial tracker that allows you to track your purchases and expenses. You can also select to create a budget based on the category of expenditure."
+            android:defaultValue="None"
+            android:selectable="false"/>
+
+        <ListPreference
+            android:key="A"
+            android:title="Adding a New Entry"
+            android:summary="Click the add entry icon and input the requested information. Hit Ok to confirm entry. All fields must be filled out."
+            android:defaultValue="None"
+            android:selectable="false"
+            android:icon="@drawable/plus"/>
+
+        <ListPreference
+            android:key="B"
+            android:title="Viewing the Budget"
+            android:summary="Click the View Budget Icon to view current entry totals and the entered budget limits."
+            android:defaultValue="None"
+            android:selectable="false"
+            android:icon="@drawable/budget"/>
+
+        <ListPreference
+            android:key="C"
+            android:title="Create a New Budget"
+            android:summary="Click the new budget icon and select to manually enter the limit values or have the system calculate them. Click confirm to accept and save the new values."
+            android:defaultValue="None"
+            android:selectable="false"
+            android:icon="@drawable/calc"/>
+
+        <ListPreference
+            android:key="D"
+            android:title="Refresh"
+            android:summary="Clicking the refresh button will refresh the list of entries."
+            android:defaultValue="None"
+            android:icon="@drawable/refresh"
+            android:selectable="false"/>
 
     </PreferenceCategory>
 

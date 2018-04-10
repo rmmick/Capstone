@@ -1,7 +1,6 @@
 package com.helper.budget.capstone;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -47,7 +46,7 @@ public class Main_Activity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         mEntries = new entryDatabase();
         Intent intent = getIntent();
-        mEntries.username = intent.getStringExtra("username");
+        mEntries.setUsername(intent.getStringExtra("username"));
         populateData();
         loadRecyclerView();
         setTitle("");
@@ -114,9 +113,20 @@ public class Main_Activity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_settings:
+            case R.id.action_guide:
                 Intent setIntent = new Intent(this, preferenceActivity.class);
                 startActivity(setIntent);
+                return true;
+
+            case R.id.action_info:
+                final AlertDialog.Builder b = new AlertDialog.Builder(this);
+                b.setMessage("Budget Helper App Created by Bryan Petty & Rachel McCown c.2018")
+                        .setCancelable(false)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {}
+                        });
+                AlertDialog a = b.create();
+                a.show();
                 return true;
 
             case R.id.addEntry:
@@ -193,8 +203,8 @@ public class Main_Activity extends AppCompatActivity {
 
     private void populateData(){
         entrySelectTask task = new entrySelectTask(this,mEntries);
-        task.execute(mEntries.username);
+        task.execute(mEntries.getUsername());
         budgetSelectTask task1  = new budgetSelectTask(this,mEntries);
-        task1.execute(mEntries.username);
+        task1.execute(mEntries.getUsername());
     }
 }

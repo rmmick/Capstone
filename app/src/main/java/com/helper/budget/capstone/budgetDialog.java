@@ -8,6 +8,9 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.helper.budget.capstone.R;
+import com.helper.budget.capstone.entryDatabase;
+
 import java.text.DecimalFormat;
 
 /**
