@@ -182,10 +182,6 @@ public class Main_Activity extends AppCompatActivity {
 
             createBudgetDialog bd = new createBudgetDialog(this, mEntries, type);
             WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-            lp.copyFrom(bd.getWindow().getAttributes());
-            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-            lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-            bd.getWindow().setAttributes(lp);
             bd.show();
 
     }
@@ -206,5 +202,9 @@ public class Main_Activity extends AppCompatActivity {
         task.execute(mEntries.getUsername());
         budgetSelectTask task1  = new budgetSelectTask(this,mEntries);
         task1.execute(mEntries.getUsername());
+    }
+
+    public RecyclerAdapter getAdapter() {
+        return mAdapter;
     }
 }

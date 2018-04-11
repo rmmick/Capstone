@@ -1,242 +1,194 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="355dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:padding="3dip"
+        android:text="Finance Report"
+        android:textSize="26dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="13dp"
-            android:text="Financial Report:"
-            android:textSize="24dp" />
+    <TableLayout
+        android:layout_width="290dp"
+        android:layout_height="225dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:stretchColumns="*"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title">
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textView"
-            android:layout_marginEnd="26dp"
-            android:layout_marginTop="65dp"
-            android:layout_toStartOf="@+id/houseTotal"
-            android:text="House:"
-            android:textSize="18dp" />
+        <TableRow>
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/textView2"
-            android:layout_below="@+id/textView2"
-            android:layout_marginTop="20dp"
-            android:text="Vehicle:"
-            android:textSize="18dp" />
+            <TextView
+                android:id="@+id/category"
+                android:padding="3dip"
+                android:text="Category"
+                android:textSize="16dp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/textView3"
-            android:layout_below="@+id/textView3"
-            android:layout_marginTop="20dp"
-            android:text="Food:"
-            android:textSize="18dp" />
+            <TextView
+                android:id="@+id/total"
+                android:padding="3dip"
+                android:text="Total"
+                android:textSize="16dp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/textView6"
-            android:layout_below="@+id/textView4"
-            android:layout_marginTop="20dp"
-            android:text="Pets:"
-            android:textSize="18dp"/>
+            <TextView
+                android:id="@+id/limit"
+                android:padding="3dip"
+                android:text="Limit"
+                android:textColor="@color/Red"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+        </TableRow>
 
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/textView4"
-            android:layout_below="@+id/textView5"
-            android:layout_marginTop="20dp"
-            android:text="Entertainment:"
-            android:textSize="18dp" />
+        <TableRow>
 
-        <TextView
-            android:id="@+id/textView7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/textView6"
-            android:layout_below="@+id/textView6"
-            android:layout_marginTop="20dp"
-            android:text="Other:"
-            android:textSize="18dp"
-            android:paddingBottom="10dp" />
+            <TextView
+                android:id="@+id/house"
+                android:padding="3dip"
+                android:text="House:"
+                android:textSize="16dp" />
 
-        <TextView
-            android:id="@+id/houseTotal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/textView2"
-            android:layout_centerHorizontal="true"
-            android:text="No Amount Set"
-            android:textSize="18dp" />
+            <TextView
+                android:id="@+id/houseTotal"
+                android:padding="3dip"
+                android:text="-"
+                android:textSize="16dp" />
 
-        <TextView
-            android:id="@+id/vehicleTotal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/textView3"
-            android:layout_alignStart="@+id/houseTotal"
-            android:text="No Amount Set"
-            android:textSize="18dp"/>
+            <TextView
+                android:id="@+id/houseLimit"
+                android:padding="3dip"
+                android:text="-"
+                android:textColor="@color/Red"
+                android:textSize="16dp" />
+        </TableRow>
 
-        <TextView
-            android:id="@+id/foodTotal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/textView4"
-            android:layout_alignEnd="@+id/vehicleTotal"
-            android:text="No Amount Set"
-            android:textSize="18dp"/>
+        <TableRow>
 
-        <TextView
-            android:id="@+id/petsTotal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/textView5"
-            android:layout_alignStart="@+id/foodTotal"
-            android:text="No Amount Set"
-            android:textSize="18dp" />
+            <TextView
+                android:id="@+id/vehicle"
+                android:padding="3dip"
+                android:text="Vehicle:"
+                android:textSize="16dp" />
 
-        <TextView
-            android:id="@+id/entertainmentTotal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/textView6"
-            android:layout_alignEnd="@+id/petsTotal"
-            android:text="No Amount Set"
-            android:textSize="18dp" />
+            <TextView
+                android:id="@+id/vehicleTotal"
+                android:padding="3dip"
+                android:text="-"
+                android:textSize="16dp" />
 
-        <TextView
-            android:id="@+id/otherTotal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/textView7"
-            android:layout_alignEnd="@+id/entertainmentTotal"
-            android:text="No Amount Set"
-            android:paddingBottom="10dp"
-            android:textSize="18dp"/>
+            <TextView
+                android:id="@+id/vehicleLimit"
+                android:padding="3dip"
+                android:text="-"
+                android:textColor="@color/Red"
+                android:textSize="16dp" />
+        </TableRow>
 
-        <TextView
-            android:id="@+id/houseLimit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/houseTotal"
-            android:layout_marginStart="32dp"
-            android:layout_toEndOf="@+id/vehicleTotal"
-            android:text="No Limit Set"
-            android:textSize="18dp"
-            android:textColor="@color/Red"/>
+        <TableRow>
 
-        <TextView
-            android:id="@+id/vehicleLimit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/vehicleTotal"
-            android:layout_marginStart="32dp"
-            android:layout_toEndOf="@+id/vehicleTotal"
-            android:text="No Limit Set"
-            android:textSize="18dp"
-            android:textColor="@color/Red"/>
+            <TextView
+                android:id="@+id/food"
+                android:padding="3dip"
+                android:text="Food:"
+                android:textSize="16dp" />
 
-        <TextView
-            android:id="@+id/foodLimit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/foodTotal"
-            android:layout_marginStart="32dp"
-            android:layout_toEndOf="@+id/foodTotal"
-            android:text="No Limit Set"
-            android:textSize="18dp"
-            android:textColor="@color/Red"/>
+            <TextView
+                android:id="@+id/foodTotal"
+                android:padding="3dip"
+                android:text="-"
+                android:textSize="16dp" />
 
-        <TextView
-            android:id="@+id/petsLimit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/petsTotal"
-            android:layout_marginStart="32dp"
-            android:layout_toEndOf="@+id/petsTotal"
-            android:text="No Limit Set"
-            android:textSize="18dp"
-            android:textColor="@color/Red"/>
+            <TextView
+                android:id="@+id/foodLimit"
+                android:padding="3dip"
+                android:text="-"
+                android:textColor="@color/Red"
+                android:textSize="16dp" />
+        </TableRow>
 
-        <TextView
-            android:id="@+id/entertainmentLimit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/entertainmentTotal"
-            android:layout_marginStart="32dp"
-            android:layout_toEndOf="@+id/entertainmentTotal"
-            android:text="No Limit Set"
-            android:textSize="18dp"
-            android:textColor="@color/Red"/>
+        <TableRow>
 
-        <TextView
-            android:id="@+id/otherLimit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/otherTotal"
-            android:layout_marginStart="32dp"
-            android:layout_toEndOf="@+id/otherTotal"
-            android:paddingBottom="10dp"
-            android:text="No Limit Set"
-            android:textSize="18dp"
-            android:textColor="@color/Red"/>
+            <TextView
+                android:id="@+id/pets"
+                android:padding="3dip"
+                android:text="Pets:"
+                android:textSize="16dp" />
 
-        <TextView
-            android:id="@+id/label1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/houseTotal"
-            android:layout_alignStart="@+id/textView3"
-            android:layout_marginBottom="22dp"
-            android:text="Category"
-            android:textSize="18dp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/petsTotal"
+                android:padding="3dip"
+                android:text="-"
+                android:textSize="16dp" />
 
-        <TextView
-            android:id="@+id/label2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/label1"
-            android:layout_alignBottom="@+id/label1"
-            android:layout_alignStart="@+id/houseTotal"
-            android:text="Spent\n(Month)"
-            android:textSize="18dp"
-            android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/petsLimit"
+                android:padding="3dip"
+                android:text="-"
+                android:textColor="@color/Red"
+                android:textSize="16dp" />
+        </TableRow>
 
-        <TextView
-            android:id="@+id/label3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/label2"
-            android:layout_alignBottom="@+id/label2"
-            android:layout_alignStart="@+id/houseLimit"
-            android:text="Budget\nLimit"
-            android:textColor="@color/Red"
-            android:textSize="18dp"
-            android:textStyle="bold" />
+        <TableRow>
 
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/entertainment"
+                android:padding="3dip"
+                android:text="Entertainment:"
+                android:textSize="16dp" />
 
+            <TextView
+                android:id="@+id/entertainmentTotal"
+                android:padding="3dip"
+                android:text="-"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/entertainmentLimit"
+                android:padding="3dip"
+                android:text="-"
+                android:textColor="@color/Red"
+                android:textSize="16dp" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/other"
+                android:padding="3dip"
+                android:text="Other:"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/otherTotal"
+                android:padding="3dip"
+                android:text="-"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/otherLimit"
+                android:padding="3dip"
+                android:text="-"
+                android:textColor="@color/Red"
+                android:textSize="16dp" />
+        </TableRow>
+
+    </TableLayout>
 </android.support.constraint.ConstraintLayout>

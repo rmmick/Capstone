@@ -111,11 +111,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter. image
 
     private void delete(int p){
         int position = p;
-        entryDeleteTask task = new entryDeleteTask(a, eDB, position);
+        entryDeleteTask task = new entryDeleteTask(a, eDB, position, this);
         Entry e = eDB.getEntriesList().get(position);
         task.execute(eDB.username, e.Category, e.year, e.month, e.day, e.Description, e.Cost.toString(), e.Name);
-
+        //notifyDeletion(position);
         //eDB.getEntriesList().remove(position);
+        //if(task.getStatus())
     }
 
     public void notifyDeletion(int position){
@@ -136,7 +137,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter. image
             case "Cost":
                 Collections.sort(eDB.getEntriesList(), new CompareCost());
                 break;
-            case "Entry Name":
+            case "Name":
                 Collections.sort(eDB.getEntriesList(), new CompareName());
                 break;
             case "Date":

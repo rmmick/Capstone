@@ -3,6 +3,7 @@ package com.helper.budget.capstone.AsyncTasks;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
@@ -15,6 +16,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.helper.budget.capstone.Main_Activity;
 import com.helper.budget.capstone.R;
+import com.helper.budget.capstone.RecyclerAdapter;
 import com.helper.budget.capstone.entryDatabase;
 
 import java.util.HashMap;
@@ -35,12 +37,14 @@ public class entryDeleteTask extends AsyncTask<String, Void, String> {
     private ProgressDialog myProgressDialog;
     private entryDatabase EDB;
     private int pos;
+    RecyclerAdapter recyclerAdapter;
 
-    public entryDeleteTask(Main_Activity activity, entryDatabase e, int p) {
+    public entryDeleteTask(Main_Activity activity, entryDatabase e, int p, RecyclerAdapter recyclerAdapter) {
 
         attach(activity);
         EDB = e;
         pos = p;
+        this.recyclerAdapter = recyclerAdapter;
     }
 
     @Override
@@ -140,6 +144,12 @@ public class entryDeleteTask extends AsyncTask<String, Void, String> {
                             Log.d("Response", response);
                             if(response.equals("Data Deleted Successfully")){
                                 EDB.getEntriesList().remove(pos);
+//                                RecyclerView rv = main.findViewById(R.id.recyclerView);
+//                                RecyclerAdapter ra = (RecyclerAdapter) rv.getAdapter();
+//                                ra.notifyItemRemoved(pos);
+//                                ra.notifyItemRangeChanged(pos, EDB.getEntriesList().size());
+                                Main_Activity m = (Main_Activity) main;
+                                m.getAdapter().notifyDeletion(pos);
                                 Button r = main.findViewById(R.id.mainRefresh);
                                 r.performClick();
                             }

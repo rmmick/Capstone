@@ -18,6 +18,14 @@
         <item name="android:statusBarColor">@color/Black</item>
     </style>
 
+    <style name="AppTheme.NoActionBar.2">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="colorPrimary">@color/LightSeaGreen</item>
+        <item name="android:statusBarColor">@color/Black</item>
+        <item name="android:background">@color/Ivory</item>
+    </style>
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

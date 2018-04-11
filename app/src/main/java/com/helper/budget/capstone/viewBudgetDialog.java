@@ -81,10 +81,8 @@ public class viewBudgetDialog extends Dialog implements
             tv.setText(Double.toString(budgets[5]));
         }
 
-        tv = (TextView) findViewById(R.id.textView);
+        tv = (TextView) findViewById(R.id.title);
         tv.setText(title);
-
-
     }
 
     @Override
