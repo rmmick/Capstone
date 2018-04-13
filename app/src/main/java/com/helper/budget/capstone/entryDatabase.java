@@ -20,30 +20,49 @@ public class entryDatabase {
 
     private List<Entry> mEntries = new ArrayList<>();
 
+    /**
+     * initializes the user's budgets array
+     */
     public entryDatabase(){
         budgets = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
     }
 
+    /**
+     * adds an entry to the list for the recycler view
+     * @param e entry to be added
+     */
     public void addEntry(Entry e){
-
         mEntries.add(e);
     }
 
+    /**
+     * returns the list of entries currently used by the recycler view
+     * @return list of entries
+     */
     public List<Entry> getEntriesList(){
         return mEntries;
     }
 
+    /**
+     * sets the username of the current user logged in
+     * @param u user logged in
+     */
     public void setUsername(String u){
         username = u;
     }
 
+    /**
+     * calculates the average of all of the entries in the database
+     * this value is used for the system generated budget
+     */
     public void calcSysBudget(){
-
+        //initializes the arrays, with the indexs representing categories
+        //0 = vehicle, 1 = pets, 2 = home, 3 = food, 4 = entertainment, 5 = other
         totals = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
         counts = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
         averages = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 
-
+        //for all of the entries, increase the count and total of the appropriate category
         for(int i = 0; i < mEntries.size(); i++){
 
             switch(mEntries.get(i).Category){
@@ -73,30 +92,46 @@ public class entryDatabase {
                     break;
             }
         }
-
+        //then calcs average for each category and stores them in the average, following the same pattern
         for(int j = 0; j < 6; j++){
             if(counts[j] != 0)
                 averages[j] = totals[j] / counts[j];
         }
     }
 
+    /**
+     * returns the current averages of the entries
+     * @return averages of the entries
+     */
     public double[] getAverages(){
         return averages;
     }
 
-    public double[] getTotals(){
+    /*public double[] getTotals(){
         return totals;
-    }
+    }*/
 
+    /**
+     * gets the totals for the current date given
+     * @param month month of year
+     * @param year year
+     * @return totals of each entry for the date
+     */
     public double[] getTotalsForMonth(int month, int year){
+        //creates the array to return with the indexs
+        //0 = vehicle, 1 = pets, 2 = home, 3 = food, 4 = entertainment, 5 = other
         double [] monthTotals = new double[]{0.0,0.0,0.0,0.0,0.0,0.0};
         String m;
+        //adjust the month to match the syntax of the entries in the list
         if(month<10){
             m = "0" + Integer.toString(month);
         }else{
             m = Integer.toString(month);
         }
+        //convert the year to a string
         String y = Integer.toString(year);
+
+        //for each entry, add to the totals if the month and year match
         for(int i = 0; i < mEntries.size(); i++) {
             switch (mEntries.get(i).Category) {
                 case("Home"):
@@ -132,9 +167,16 @@ public class entryDatabase {
                     break;
             }
         }
+
+        //return the results
         return monthTotals;
     }
 
+    /**
+     * sets the budget for the category give
+     * @param cat category of the budget
+     * @param budget amount of budget
+     */
     public void setBudgets(String cat, double budget){
         switch (cat){
             case "Vehicle":
@@ -160,9 +202,17 @@ public class entryDatabase {
         }
     }
 
+    /**
+     * returns the current budgets for the user logged in
+     * @return current budgets
+     */
     public double[] getBudgets(){
         return budgets;
     }
 
+    /**
+     * returns the current user that is logged in
+     * @return user logged in
+     */
     public String getUsername(){return username;}
 }

@@ -1,9 +1,4 @@
 package com.helper.budget.capstone;
-
-/**
- * Created by Rachel on 2/18/2018.
- */
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
@@ -23,6 +18,9 @@ import java.util.Collections;
  * Created by Rachel on 2/6/2018.
  */
 
+/**
+ * Custom adapter to hold the user's available entires in Main Activity
+ */
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter. imageHolder> {
 
     private entryDatabase eDB;
@@ -39,6 +37,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter. image
         private Entry mEntry;
         private ImageView deleteButton;
 
+        /**
+         * stores the xml values in their respective variables
+         * @param v
+         * @param URL
+         */
         public  imageHolder(View v, String URL) {
             super(v);
             mName = (TextView) v.findViewById(R.id.name);
@@ -49,6 +52,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter. image
             v.setOnClickListener(this);
         }
 
+        /**
+         * Binds entry data to a new entry in the list
+         * @param uEntry
+         */
         public void bindData(Entry uEntry) {
 
             DecimalFormat df = new DecimalFormat("#.00");
@@ -82,6 +89,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter. image
         }
     }
 
+    /**
+     * Constructor
+     * @param newEntries
+     * @param myURL
+     * @param ab
+     */
     RecyclerAdapter(entryDatabase newEntries, String myURL, Main_Activity ab) {
         eDB = newEntries;
         mURL = myURL;
@@ -109,6 +122,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter. image
         return eDB.getEntriesList().size();
     }
 
+    /**
+     * Deletes an item from the adapter and the DB
+     * @param p
+     */
     private void delete(int p){
         int position = p;
         entryDeleteTask task = new entryDeleteTask(a, eDB, position, this);
@@ -119,11 +136,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter. image
         //if(task.getStatus())
     }
 
+    /**
+     * Notifies the adapter that an item has been deleted
+     * @param position
+     */
     public void notifyDeletion(int position){
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, eDB.getEntriesList().size());
     }
 
+    /**
+     * Displays the add entry dialog
+     */
     public void addEntry(){
 
         addDialog cdd=new addDialog(a, eDB);
@@ -132,6 +156,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter. image
 
     }
 
+    /**
+     * Sorts recyclerview entries based on user's choice
+     * @param sort
+     */
     void sortList(String sort) {
         switch (sort) {
             case "Cost":

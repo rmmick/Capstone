@@ -25,10 +25,15 @@ import com.helper.budget.capstone.AsyncTasks.entrySelectTask;
 
 import java.util.ArrayList;
 
+/**
+ * Main Activity has a recyler view and adapter that displays the users entries
+ * From this screen the user can add and delete entries
+ * The user can also create a new budget here and view the current one
+ * Overflow bar includes a user guide, information, and logout
+ */
 public class Main_Activity extends AppCompatActivity {
 
     String url = "";
-
     entryDatabase mEntries;
     Spinner spinner;
     private Button r;
@@ -103,8 +108,6 @@ public class Main_Activity extends AppCompatActivity {
             if (resultCode == Activity.RESULT_OK) {
                 if (data.getExtras().containsKey(Constants.ADD)) {
                     String myValue = data.getExtras().getString(Constants.ADD);
-
-                    // Use the returned value
                 }
             }
         }
@@ -178,6 +181,10 @@ public class Main_Activity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Displays the create Budget Dialog window
+     * @param type
+     */
     private void createDialog(int type){
 
             createBudgetDialog bd = new createBudgetDialog(this, mEntries, type);
@@ -186,6 +193,9 @@ public class Main_Activity extends AppCompatActivity {
 
     }
 
+    /**
+     * Creates the recycler view and adapter
+     */
     public void loadRecyclerView() {
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
@@ -197,6 +207,9 @@ public class Main_Activity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
     }
 
+    /**
+     * Loads the user's entries in the DB into the recycler adapter
+     */
     private void populateData(){
         entrySelectTask task = new entrySelectTask(this,mEntries);
         task.execute(mEntries.getUsername());
@@ -204,6 +217,10 @@ public class Main_Activity extends AppCompatActivity {
         task1.execute(mEntries.getUsername());
     }
 
+    /**
+     * Returns the adapter being used in the recycler view
+     * @return
+     */
     public RecyclerAdapter getAdapter() {
         return mAdapter;
     }

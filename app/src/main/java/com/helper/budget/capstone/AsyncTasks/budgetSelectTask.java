@@ -25,18 +25,20 @@ import java.util.Map;
  */
 
 public class budgetSelectTask extends AsyncTask<String, Void, String> {
-    private final String ENTRY = "entry";
-    private final String BUDGET = "budget";
-    private final String USER = "user";
+
     private Main_Activity main;
     private RequestQueue queue;
-    private String fromWeb;
     private final String ServerURL = "http://default-environment.rfemrggswx.us-west-2.elasticbeanstalk.com/";
     private ProgressDialog myProgressDialog;
     private entryDatabase EDB;
 
+    /**
+     * attach the activity for context and database to alter
+     *
+     * @param activity the context of the task
+     * @param e local database to update
+     */
     public budgetSelectTask(Main_Activity activity, entryDatabase e) {
-
         attach(activity);
         EDB = e;
     }
@@ -44,40 +46,46 @@ public class budgetSelectTask extends AsyncTask<String, Void, String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+        //start a progress dialog to stop to user from interacting with the UI
         progressDialog_start();
     }
+
+    /**
+     * Starts the  progress dialog
+     */
     private void progressDialog_start() {
         myProgressDialog = new ProgressDialog(main);
-        /*myProgressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //dialog.dismiss();
-                        //this.cancel(true);
-
-                        //myProgressDialog = null;
-                    }
-                });*/
         myProgressDialog.setTitle("Please wait");
         myProgressDialog.setMessage("Attempting to delete data...");
         myProgressDialog.setCancelable(false);
         myProgressDialog.show();
     }
 
+    /**
+     * dismisses the dialog
+     */
     private void progressDialog_stop(){
         if(myProgressDialog != null) {
             myProgressDialog.dismiss();
         }
     }
 
+    /**
+     * processes the response received from the webserver
+     *
+     * @param response message received from the webserver
+     */
     void storeResponse(String response){
+        //if the response does not start with '[', then it is not JSON and an error occurred
         if(response.charAt(0) != '['){
             Toast.makeText(main, response, Toast.LENGTH_SHORT).show();
+            //stop the dialog to allow user interaction and return
             progressDialog_stop();
             return;
-        }try {
+        }try {//otherwise, try to parse the JSON
             JSONArray jA = new JSONArray(response);
             JSONObject jO;
+            //for each object found, store it locally
             for(int i = 0; i<jA.length();i++){
                 jO = jA.getJSONObject(i);
                 String cost = jO.getString("maxValue");
@@ -85,22 +93,22 @@ public class budgetSelectTask extends AsyncTask<String, Void, String> {
                 Double amount = Double.parseDouble(cost);
                 EDB.setBudgets(category, amount);
             }
+            //stop the dialog to allow user interaction and return
             progressDialog_stop();
             return;
         }catch(Exception e){
+            //if error parsing JSON, indicate there was a problem
             Toast.makeText(main, "error parsing data", Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
         }
+        //stop the dialog to allow user interaction
         progressDialog_stop();
-        Log.d("MAIN TASK", response);
-        fromWeb = response;
-        //Toast.makeText(main, fromWeb, Toast.LENGTH_SHORT).show();
-        Log.d("MAIN TASK", fromWeb);
-    }
-    void detach() {
-        main = null;
     }
 
+    /**
+     * sets the main activity context
+     *
+     * @param activity activity context given
+     */
     void attach(Main_Activity activity) {
         main = activity;
     }
@@ -108,10 +116,6 @@ public class budgetSelectTask extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        /*if (main != null) {
-            Toast.makeText(main, s, Toast.LENGTH_SHORT).show();
-        }
-        detach();*/
     }
 
     @Override
@@ -122,42 +126,43 @@ public class budgetSelectTask extends AsyncTask<String, Void, String> {
     @Override
     protected String doInBackground(String... strings) {
         final String NameHolder;
-        try {
+        try {//try to get the require values
             NameHolder = strings[0];
         }  catch (Exception e) {
             return "Not Enough Information Given";
         }
+
+        //create a new web request for selecting the budgets
         StringRequest postRequest = new StringRequest(Request.Method.POST, ServerURL + "selectBudget.php",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // response
+                        //on response from webserver, handle it
                         storeResponse(response);
-                        Log.d("Response", response);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // error
-                        error.printStackTrace();
-                        storeResponse(error.toString()+" From Budget");
-                        Log.d("Error.Response", error.toString());
+                        //if error, inform the user
+                        storeResponse("Problem accessing The web server");
                     }
                 }
 
         ) {
             @Override
             protected Map<String, String> getParams() {
+                //send the parameters to the webserver for the SQL
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("username", NameHolder);
                 return params;
             }
         };
+        //add the request to the queue to be picked up by the next network thread
         if (main != null) {
             queue = Volley.newRequestQueue(main);
             queue.add(postRequest);
         }
-        return "Problem Deleted Data";
+        return "Success";
     }
 }

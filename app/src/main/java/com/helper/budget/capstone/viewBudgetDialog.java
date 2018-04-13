@@ -21,11 +21,19 @@ import java.util.Calendar;
  * Created by Rachel on 3/19/2018.
  */
 
+/**
+ * Displays the budget dialog brief report
+ */
 public class viewBudgetDialog extends Dialog implements
         android.view.View.OnClickListener {
 
     entryDatabase e;
 
+    /**
+     * Constructor
+     * @param a
+     * @param EDB
+     */
     public viewBudgetDialog(Activity a, entryDatabase EDB){
         super(a);
         e = EDB;

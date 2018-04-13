@@ -29,11 +29,15 @@ import java.util.Map;
 public class userSelectTask extends AsyncTask<String, Void, String>{
     private Login main;
     private RequestQueue queue;
-    private String fromWeb;
     private final String ServerURL = "http://default-environment.rfemrggswx.us-west-2.elasticbeanstalk.com/";
     private ProgressDialog myProgressDialog;
     private String password, username;
 
+    /**
+     * attach the activity for context
+     *
+     * @param activity the context of the task
+     */
     public userSelectTask(Login activity) {
         attach(activity);
     }
@@ -41,8 +45,13 @@ public class userSelectTask extends AsyncTask<String, Void, String>{
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+        //start a progress dialog to stop to user from interacting with the UI
         progressDialog_start();
     }
+
+    /**
+     * Starts the  progress dialog
+     */
     private void progressDialog_start() {
         myProgressDialog = new ProgressDialog(main);
         myProgressDialog.setTitle("Please wait");
@@ -51,24 +60,33 @@ public class userSelectTask extends AsyncTask<String, Void, String>{
         myProgressDialog.show();
     }
 
+    /**
+     * dismisses the dialog
+     */
     private void progressDialog_stop(){
         if(myProgressDialog != null) {
             myProgressDialog.dismiss();
         }
     }
 
+    /**
+     * processes the response received from the webserver
+     *
+     * @param response message received from the webserver
+     */
     private void storeResponse(String response){
-        Log.d("MAIN TASK", response);
-        fromWeb = response;
-        //Toast.makeText(main, fromWeb, Toast.LENGTH_SHORT).show();
-        Log.d("MAIN TASK", fromWeb);
+        //if the response does not start with '[', then it is not JSON and an error occurred
         if(response.charAt(0) != '['){
+            //stop the dialog to allow user interaction and return
             Toast.makeText(main, response, Toast.LENGTH_SHORT).show();
             progressDialog_stop();
             return;
         }
+        //if the response is [] then there was no entry returned
         if(response.equals("[]")){
+            //inform the user they are not in the database
             Toast.makeText(main, "user does not exist in database", Toast.LENGTH_SHORT).show();
+            //stop the dialog to allow user interaction and return
             progressDialog_stop();
             return;
         }
@@ -82,23 +100,26 @@ public class userSelectTask extends AsyncTask<String, Void, String>{
                 progressDialog_stop();
                 Intent intent = new Intent(main, Main_Activity.class);
                 intent.putExtra("username", username);
-                //intent.addExtra(the username);
                 main.startActivity(intent);
             }else{
+                //the password was incorrect, inform the user
                 Toast.makeText(main, "incorrect username or password", Toast.LENGTH_SHORT).show();
+                //stop the dialog to allow user interaction and return
                 progressDialog_stop();
-                return;
             }
         }catch(Exception e){
+            //if here, there was an error parsing, inform the user of the error
             Toast.makeText(main, "Error Parsing data", Toast.LENGTH_SHORT).show();
+            //stop the dialog to allow user interaction and return
             progressDialog_stop();
-            return;
         }
     }
-    void detach() {
-        main = null;
-    }
 
+    /**
+     * sets the main activity context
+     *
+     * @param activity activity context given
+     */
     void attach(Login activity) {
         main = activity;
     }
@@ -115,44 +136,43 @@ public class userSelectTask extends AsyncTask<String, Void, String>{
 
     @Override
     protected String doInBackground(String... strings) {
-        fromWeb = "";
-            try {
+            try {//try to get the require values
                 username = strings[0];
                 password = strings[1];
             } catch (Exception e) {
                 return "Not Enough Information Given";
             }
+            //create a new web request for selecting the budgets
             StringRequest postRequest = new StringRequest(Request.Method.POST, ServerURL + "selectUser.php",
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            // response
+                            //on response from webserver, handle it
                             storeResponse(response);
-                            Log.d("Response", response);
                         }
                     },
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            // error
-                            storeResponse(error.toString()+" From User");
-                            Log.d("Error.Response", error.toString());
+                            //if error, inform the user
+                            storeResponse("Problem accessing The web server");
                         }
                     }
             ) {
                 @Override
                 protected Map<String, String> getParams() {
+                    //send the parameters to the webserver for the SQL
                     Map<String, String> params = new HashMap<String, String>();
                     params.put("username", username);
                     return params;
                 }
             };
+             //add the request to the queue to be picked up by the next network thread
             if (main != null) {
                 queue = Volley.newRequestQueue(main);
                 queue.add(postRequest);
-                return fromWeb+" From User";
             }
 
-        return "Problem Deleting Data";
+        return "Success";
     }
 }

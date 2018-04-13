@@ -26,22 +26,23 @@ import java.util.Map;
  */
 
 public class budgetDeleteTask extends AsyncTask<String, Void, String> {
-    private final String ENTRY = "entry";
-    private final String BUDGET = "budget";
-    private final String USER = "user";
     private Main_Activity main;
     private RequestQueue queue;
-    private String fromWeb;
     private final String ServerURL = "http://default-environment.rfemrggswx.us-west-2.elasticbeanstalk.com/";
     private ProgressDialog myProgressDialog;
     private entryDatabase EDB;
     private double newAmount;
     private String userGen;
-    String NameHolder;
-    String CatHolder;
+    private String NameHolder;
+    private String CatHolder;
 
+    /**
+     * attach the activity for context and database to alter
+     *
+     * @param activity the context of the task
+     * @param e local database to update
+     */
     public budgetDeleteTask(Main_Activity activity, entryDatabase e) {
-
         attach(activity);
         EDB = e;
     }
@@ -49,36 +50,41 @@ public class budgetDeleteTask extends AsyncTask<String, Void, String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+        //start a progress dialog to stop to user from interacting with the UI
         progressDialog_start();
     }
+
+    /**
+     * Starts the  progress dialog
+     */
     private void progressDialog_start() {
         myProgressDialog = new ProgressDialog(main);
-        /*myProgressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //dialog.dismiss();
-                        //this.cancel(true);
-
-                        //myProgressDialog = null;
-                    }
-                });*/
         myProgressDialog.setTitle("Please wait");
         myProgressDialog.setMessage("Attempting to delete data...");
         myProgressDialog.setCancelable(false);
         myProgressDialog.show();
     }
 
+    /**
+     * dismisses the dialog
+     */
     private void progressDialog_stop(){
         if(myProgressDialog != null) {
             myProgressDialog.dismiss();
         }
     }
 
+    /**
+     * processes the response received from the webserver
+     *
+     * @param response message received from the webserver
+     */
     void storeResponse(String response){
+        //if the budget was deleted, update the local budget
         if(response.equals("Data Deleted Successfully")){
             budgetInsertTask task = new budgetInsertTask(main,EDB);
             EDB.setBudgets(CatHolder, 0.0);
+            //then execute an insert task to update the new budget the new value isn't 0
             if(newAmount!=0.0){
                 task.execute(NameHolder,
                         CatHolder,
@@ -91,18 +97,18 @@ public class budgetDeleteTask extends AsyncTask<String, Void, String> {
             }
 
         }else{
+            //otherwise report the error
             Toast.makeText(main, response, Toast.LENGTH_SHORT).show();
         }
+        //stop the progress dialog to allow UI interaction
         progressDialog_stop();
-        Log.d("MAIN TASK", response);
-        fromWeb = response;
-        //Toast.makeText(main, fromWeb, Toast.LENGTH_SHORT).show();
-        Log.d("MAIN TASK", fromWeb);
-    }
-    void detach() {
-        main = null;
     }
 
+    /**
+     * sets the main activity context
+     *
+     * @param activity activity context given
+     */
     void attach(Main_Activity activity) {
         main = activity;
     }
@@ -110,10 +116,6 @@ public class budgetDeleteTask extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        /*if (main != null) {
-            Toast.makeText(main, s, Toast.LENGTH_SHORT).show();
-        }
-        detach();*/
     }
 
     @Override
@@ -123,7 +125,7 @@ public class budgetDeleteTask extends AsyncTask<String, Void, String> {
 
     @Override
     protected String doInBackground(String... strings) {
-        try {
+        try {//try to get the require values
             NameHolder = strings[0];
             CatHolder = strings[1];
             newAmount = Double.parseDouble(strings[2]);
@@ -131,38 +133,38 @@ public class budgetDeleteTask extends AsyncTask<String, Void, String> {
         }  catch (Exception e) {
             return "Not Enough Information Given";
         }
+        //create a new web request for deleting the budget
         StringRequest postRequest = new StringRequest(Request.Method.POST, ServerURL + "deleteBudget.php",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // response
+                        //on response from webserver, handle it
                         storeResponse(response);
-                        Log.d("Response", response);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // error
-                        error.printStackTrace();
-                        storeResponse(error.toString()+" From Budget");
-                        Log.d("Error.Response", error.toString());
+                        //if error, inform the user
+                        storeResponse("Problem accessing The web server");
                     }
                 }
 
         ) {
             @Override
             protected Map<String, String> getParams() {
+                //send the parameters to the webserver for the SQL
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("username", NameHolder);
                 params.put("category", CatHolder);
                 return params;
             }
         };
+        //add the request to the queue to be picked up by the next network thread
         if (main != null) {
             queue = Volley.newRequestQueue(main);
             queue.add(postRequest);
         }
-        return "Problem Deleted Data";
+        return "Success";
     }
 }

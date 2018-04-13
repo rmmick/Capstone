@@ -32,6 +32,12 @@ public class createBudgetDialog extends Dialog implements
     EditText other;
     Main_Activity main;
 
+    /**
+     * gives the context of the dialog, the database to alter and the type of budget
+     * @param a context of the dialog
+     * @param EDB database to alter
+     * @param type type of budget created
+     */
     public createBudgetDialog(Main_Activity a, entryDatabase EDB, int type){
         super(a);
         mEDB = EDB;
@@ -49,7 +55,7 @@ public class createBudgetDialog extends Dialog implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_budget_dialog);
 
-
+        //set the layout and initialize all of the XML components
         vehicle = (EditText) findViewById(R.id.vCalc);
         pets = (EditText) findViewById(R.id.pCalc);
         home = (EditText) findViewById(R.id.hCalc);
@@ -59,37 +65,28 @@ public class createBudgetDialog extends Dialog implements
         Button cancel = (Button) findViewById(R.id.cancelSys);
         Button ok = (Button) findViewById(R.id.acceptSys);
 
+        //if the user cancels, the dialog is dismissed
         cancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 dismiss();
             }
         });
 
-        /*ok.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                //TODO Save limit values here
-                if(!vehicle.getText().toString().equals(".00")&& mEDB.getBudgets()[0] == 0.00 ){
-                    budgetInsertTask task = new budgetInsertTask(main,mEDB);
-                    task.execute(mEDB.username,
-                            "Vehicle",
-                            Integer.toString(Calendar.getInstance().get(Calendar.YEAR)),
-                            Integer.toString(Calendar.getInstance().get(Calendar.MONTH) + 1),
-                            Integer.toString(Calendar.getInstance().get(Calendar.DAY_OF_MONTH)),
-                            "0",
-                            vehicle.getText().toString());
-                }
-                dismiss();
-            }
-        });*/
-
+        //if the user selected system generated, calculations are done for each category
         if(mType == SYSTEM){
+            //sets up the dialog and calculates the budgets
             TextView tv = (TextView) findViewById(R.id.calcTitle);
             tv.setText("Calculated Budget Limits:");
             systemGenerated();
+            //if the user accepts, a task is executed for each category to update the budgets
+            //the userGen option is an F for system gen because when userGen is checked to see if its valid on the website
+            //and userGen if equal to 0, it will always be false because if(0) is always false in PHP
+            //because of this, F is used as an alternative
             ok.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    //Save limit values here
+                    //for vehicle
                     if(!vehicle.getText().toString().equals(".00")){
+                        //if budget is empty, insert a new budget
                         if(mEDB.getBudgets()[0] == 0.00 ){
                             budgetInsertTask task = new budgetInsertTask(main,mEDB);
                             task.execute(mEDB.username,
@@ -99,7 +96,7 @@ public class createBudgetDialog extends Dialog implements
                                     Integer.toString(Calendar.getInstance().get(Calendar.DAY_OF_MONTH)),
                                     "F",
                                     vehicle.getText().toString());
-                        }else{
+                        }else{//otherwise delete the old budget
                             budgetDeleteTask task = new budgetDeleteTask(main, mEDB);
                             task.execute(mEDB.username,
                                     "Vehicle",
@@ -111,6 +108,7 @@ public class createBudgetDialog extends Dialog implements
                     //for pets
                     if(!pets.getText().toString().equals(".00")){
                         if(mEDB.getBudgets()[1] == 0.00) {
+                            //if budget is empty, insert a new budget
                             budgetInsertTask task = new budgetInsertTask(main, mEDB);
                             task.execute(mEDB.username,
                                     "Pets",
@@ -120,6 +118,7 @@ public class createBudgetDialog extends Dialog implements
                                     "F",
                                     pets.getText().toString());
                         }else{
+                            //otherwise delete the old budget
                             budgetDeleteTask task = new budgetDeleteTask(main, mEDB);
                             task.execute(mEDB.username,
                                     "Pets",
@@ -131,6 +130,7 @@ public class createBudgetDialog extends Dialog implements
                     //for home
                     if(!home.getText().toString().equals(".00")){
                         if(mEDB.getBudgets()[2] == 0.00 ) {
+                            //if budget is empty, insert a new budget
                             budgetInsertTask task = new budgetInsertTask(main, mEDB);
                             task.execute(mEDB.username,
                                     "Home",
@@ -140,6 +140,7 @@ public class createBudgetDialog extends Dialog implements
                                     "F",
                                     home.getText().toString());
                         }else{
+                            //otherwise delete the old budget
                             budgetDeleteTask task = new budgetDeleteTask(main, mEDB);
                             task.execute(mEDB.username,
                                     "Home",
@@ -151,6 +152,7 @@ public class createBudgetDialog extends Dialog implements
                     //for food
                     if(!food.getText().toString().equals(".00")){
                         if(mEDB.getBudgets()[3] == 0.00 ){
+                            //if budget is empty, insert a new budget
                             budgetInsertTask task = new budgetInsertTask(main, mEDB);
                             task.execute(mEDB.username,
                                     "Food",
@@ -160,6 +162,7 @@ public class createBudgetDialog extends Dialog implements
                                     "F",
                                     food.getText().toString());
                         }else{
+                            //otherwise delete the old budget
                             budgetDeleteTask task = new budgetDeleteTask(main, mEDB);
                             task.execute(mEDB.username,
                                     "Food",
@@ -171,6 +174,7 @@ public class createBudgetDialog extends Dialog implements
                     //for entertainment
                     if(!entertainment.getText().toString().equals(".00")){
                         if(mEDB.getBudgets()[4] == 0.00 ) {
+                            //if budget is empty, insert a new budget
                             budgetInsertTask task = new budgetInsertTask(main, mEDB);
                             task.execute(mEDB.username,
                                     "Entertainment",
@@ -180,6 +184,7 @@ public class createBudgetDialog extends Dialog implements
                                     "F",
                                     entertainment.getText().toString());
                         }else{
+                            //otherwise delete the old budget
                             budgetDeleteTask task = new budgetDeleteTask(main, mEDB);
                             task.execute(mEDB.username,
                                     "Entertainment",
@@ -191,6 +196,7 @@ public class createBudgetDialog extends Dialog implements
                     //for other
                     if(!other.getText().toString().equals(".00")){
                         if(mEDB.getBudgets()[5] == 0.00) {
+                            //if budget is empty, insert a new budget
                             budgetInsertTask task = new budgetInsertTask(main, mEDB);
                             task.execute(mEDB.username,
                                     "Other",
@@ -200,6 +206,7 @@ public class createBudgetDialog extends Dialog implements
                                     "F",
                                     other.getText().toString());
                         }else{
+                            //otherwise delete the old budget
                             budgetDeleteTask task = new budgetDeleteTask(main, mEDB);
                             task.execute(mEDB.username,
                                     "Other",
@@ -210,16 +217,18 @@ public class createBudgetDialog extends Dialog implements
                     dismiss();
                 }
             });
-        } else if (mType == MANUAL){
+        }
+        //otherwise, the user manually input the budget, the userGen field is a 1 instead of an F
+        else if (mType == MANUAL){
             TextView tv = (TextView) findViewById(R.id.calcTitle);
             tv.setText("Enter in Budget Limits:");
-            manualGenerated();
             ok.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     //Save limit values here
                     if(!vehicle.getText().toString().isEmpty()
                             && Double.parseDouble(vehicle.getText().toString()) != 0.0){
                         if(mEDB.getBudgets()[0] == 0.00 ){
+                            //if budget is empty, insert a new budget
                             budgetInsertTask task = new budgetInsertTask(main, mEDB);
                             task.execute(mEDB.username,
                                     "Vehicle",
@@ -229,6 +238,7 @@ public class createBudgetDialog extends Dialog implements
                                     "1",
                                     vehicle.getText().toString());
                         }else{
+                            //otherwise delete the old budget
                             budgetDeleteTask task = new budgetDeleteTask(main, mEDB);
                             task.execute(mEDB.username,
                                     "Vehicle",
@@ -241,6 +251,7 @@ public class createBudgetDialog extends Dialog implements
                     if(!pets.getText().toString().isEmpty()
                             && Double.parseDouble(pets.getText().toString()) != 0.0) {
                                 if(mEDB.getBudgets()[1] == 0.00 ) {
+                                    //if budget is empty, insert a new budget
                                     budgetInsertTask task = new budgetInsertTask(main, mEDB);
                                     task.execute(mEDB.username,
                                             "Pets",
@@ -250,6 +261,7 @@ public class createBudgetDialog extends Dialog implements
                                             "1",
                                             pets.getText().toString());
                                 }else{
+                                    //otherwise delete the old budget
                                     budgetDeleteTask task = new budgetDeleteTask(main, mEDB);
                                     task.execute(mEDB.username,
                                             "Pets",
@@ -262,6 +274,7 @@ public class createBudgetDialog extends Dialog implements
                     if(!home.getText().toString().isEmpty()
                             && Double.parseDouble(home.getText().toString()) != 0.0 ){
                                 if(mEDB.getBudgets()[2] == 0.00 ) {
+                                    //if budget is empty, insert a new budget
                                     budgetInsertTask task = new budgetInsertTask(main, mEDB);
                                     task.execute(mEDB.username,
                                             "Home",
@@ -271,6 +284,7 @@ public class createBudgetDialog extends Dialog implements
                                             "1",
                                             home.getText().toString());
                                 }else{
+                                    //otherwise delete the old budget
                                     budgetDeleteTask task = new budgetDeleteTask(main, mEDB);
                                     task.execute(mEDB.username,
                                             "Home",
@@ -283,6 +297,7 @@ public class createBudgetDialog extends Dialog implements
                     if(!food.getText().toString().isEmpty()
                             && Double.parseDouble(food.getText().toString()) != 0.0){
                                 if(mEDB.getBudgets()[3] == 0.00 ) {
+                                    //if budget is empty, insert a new budget
                                     budgetInsertTask task = new budgetInsertTask(main, mEDB);
                                     task.execute(mEDB.username,
                                             "Food",
@@ -292,6 +307,7 @@ public class createBudgetDialog extends Dialog implements
                                             "1",
                                             food.getText().toString());
                                 }else{
+                                    //otherwise delete the old budget
                                     budgetDeleteTask task = new budgetDeleteTask(main, mEDB);
                                     task.execute(mEDB.username,
                                             "Food",
@@ -305,6 +321,7 @@ public class createBudgetDialog extends Dialog implements
                     if(!entertainment.getText().toString().isEmpty()
                             && Double.parseDouble(entertainment.getText().toString()) != 0.0) {
                         if (mEDB.getBudgets()[4] == 0.00) {
+                            //if budget is empty, insert a new budget
                             budgetInsertTask task = new budgetInsertTask(main, mEDB);
                             task.execute(mEDB.username,
                                     "Entertainment",
@@ -315,6 +332,7 @@ public class createBudgetDialog extends Dialog implements
                                     entertainment.getText().toString());
                         }
                         else{
+                            //otherwise delete the old budget
                             budgetDeleteTask task = new budgetDeleteTask(main, mEDB);
                             task.execute(mEDB.username,
                                     "Entertainment",
@@ -327,6 +345,7 @@ public class createBudgetDialog extends Dialog implements
                     if(!other.getText().toString().isEmpty()
                             && Double.parseDouble(other.getText().toString()) != 0.0){
                                 if( mEDB.getBudgets()[5] == 0.00) {
+                                    //if budget is empty, insert a new budget
                                     budgetInsertTask task = new budgetInsertTask(main, mEDB);
                                     task.execute(mEDB.username,
                                             "Other",
@@ -336,6 +355,7 @@ public class createBudgetDialog extends Dialog implements
                                             "1",
                                             other.getText().toString());
                                 }else{
+                                    //otherwise delete the old budget
                                     budgetDeleteTask task = new budgetDeleteTask(main, mEDB);
                                     task.execute(mEDB.username,
                                             "Other",
@@ -350,22 +370,27 @@ public class createBudgetDialog extends Dialog implements
 
     }
 
-    private void manualGenerated() {
-        //TODO Save Users entered Limits
-    }
-
+    /**
+     * generates the user budgets based on the averages spent
+     * then sets the edit texts that show the budgets to these values
+     * it also makes the edit texts non editable to ensure that system and manual budgets are not mixed
+     */
     private void systemGenerated(){
 
+        //gets the averages
         mEDB.calcSysBudget();
         double [] averages = mEDB.getAverages();
         DecimalFormat df = new DecimalFormat("#.00");
 
+        //sets the averages
         vehicle.setText(df.format(averages[0]));
         pets.setText(df.format(averages[1]));
         home.setText(df.format(averages[2]));
         food.setText(df.format(averages[3]));
         entertainment.setText(df.format(averages[4]));
         other.setText(df.format(averages[5]));
+
+        //locks the edit texts
         vehicle.setInputType(0);
         pets.setInputType(0);
         home.setInputType(0);
